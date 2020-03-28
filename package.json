@@ -12,11 +12,16 @@
     "build-prod": "parcel build src/index.html"
   },
   "dependencies": {
+    "@babel/runtime-corejs2": "^7.9.2",
+    "babel-polyfill": "^6.26.0",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "web3": "^1.2.6"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0",
+    "@babel/core": "^7.0.0-0",
+    "@babel/plugin-transform-runtime": "^7.9.0",
+    "@babel/polyfill": "^7.0.0",
     "@babel/preset-env": "^7.9.0",
     "@babel/preset-react": "^7.9.4",
     "eslint": "^6.8.0",
