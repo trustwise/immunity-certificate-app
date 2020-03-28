@@ -20,7 +20,6 @@ const TesterApprovalForm = () => (
     validationSchema={TesterApprovalFormValidation}
     onSubmit={(values, { setSubmitting }) => {
       setTimeout(() => {
-        // alert(JSON.stringify(values, null, 2));
         console.log(values)
         setSubmitting(false);
       }, 1000);
