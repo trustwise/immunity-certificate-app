@@ -19,7 +19,12 @@ const App = ({ projectTitle }) => {
 
   const [activeAccount, setActiveAccount] = useState('');
 
-  useEffect(() => { isMetaMaskReady && setActiveAccount(ethereum.selectedAddress) && ethEnabled(); }, []);
+  useEffect(() => {
+    if (isMetaMaskReady) {
+      setActiveAccount(ethereum.selectedAddress)
+      ethEnabled();
+    }
+  }, []);
 
   isMetaMaskReady && ethereum.on('accountsChanged', function (accounts) {
     setActiveAccount(accounts ? accounts[0] : '');
