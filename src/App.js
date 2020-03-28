@@ -1,5 +1,5 @@
 
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -14,8 +14,12 @@ import { AccountNotReady , MetaMaskNotReady } from './core/alerts'
 
 
 const App = ({ projectTitle }) => {
-  const isMetaMaskReady = window.ethereum && window.ethereum.isMetaMask;
-  const isAccountReady = isMetaMaskReady && window.ethereum.selectedAddress;
+
+  const [isMetaMaskReady, setIsMetaMaskReady] = useState({});
+  useEffect(() => { setIsMetaMaskReady(window.ethereum && window.ethereum.isMetaMask) }, []);
+
+  const [isAccountReady, setIsAccountReady] = useState({});
+  useEffect(() => { setIsAccountReady(isMetaMaskReady && window.ethereum.selectedAddress) }, []);
 
   return (
     <Router>
