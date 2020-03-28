@@ -7,7 +7,7 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "clean": "rm dist/bundle.js",
+    "clean": "rm dist/index.js",
     "start": "parcel src/index.html",
     "build-prod": "parcel build src/index.html"
   },
@@ -16,11 +16,12 @@
     "react-dom": "^16.13.1"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.12.4",
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.0",
     "@babel/preset-react": "^7.9.4",
     "eslint": "^6.8.0",
-    "eslint-plugin-react": "^7.19.0"
+    "eslint-plugin-react": "^7.19.0",
+    "parcel-bundler": "^1.12.4",
+    "sass": "^1.26.3"
   }
 }
