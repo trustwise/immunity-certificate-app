@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { ErrorMessage, Field } from 'formik';
+import { Field } from 'formik';
+import FieldError from './error';
 
 
 /**
@@ -9,24 +10,24 @@ import { ErrorMessage, Field } from 'formik';
  * TODO add other props as necessary (className, placeholder, etc.)
  */
 const TextField = ({ id, label, name, type, ...props }) => (
-    <Fragment>
-        {label && (<label htmlFor={id || name}>{label}</label>)}
-        <ErrorMessage name={name} />
-        <Field type={type} id={id || name} name={name} {...props} />
-    </Fragment>
+  <Fragment>
+    {label && (<label htmlFor={id || name}>{label}</label>)}
+    <FieldError name={name} />
+    <Field type={type} id={id || name} name={name} {...props} />
+  </Fragment>
 );
 
 TextField.defaultProps = {
-    id: '',
-    label: '',
-    type: 'text',
+  id: '',
+  label: '',
+  type: 'text',
 };
 
 TextField.propTypes = {
-    id: PropTypes.string,
-    label: PropTypes.string,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string,
+  id: PropTypes.string,
+  label: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string,
 };
 
 export default TextField;

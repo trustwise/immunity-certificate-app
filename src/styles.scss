@@ -21,10 +21,22 @@ h1 {
   }
 }
 
+// Navigation
+nav {
+  margin-bottom: 1rem;
+}
+
 // Forms
 form {
   @extend .centered;
   @extend .limit-width;
+}
+.field-error {
+  color: $color-primary;
+  text-align: left;
+  & + input {
+    border-color: $color-primary;
+  }
 }
 
 // Messages
