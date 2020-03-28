@@ -15,13 +15,13 @@ import { AccountNotReady , MetaMaskNotReady } from './core/alerts'
 
 const App = ({ projectTitle }) => {
 
-  const isMetaMaskReady = 'ethereum' in window && 'isMetaMask' in window.ethereum && window.ethereum.isMetaMask;
+  const isMetaMaskReady = 'ethereum' in window && 'isMetaMask' in ethereum && ethereum.isMetaMask;
 
   const [activeAccount, setActiveAccount] = useState('');
 
-  useEffect(() => { isMetaMaskReady && setActiveAccount(window.ethereum.selectedAddress); }, []);
+  useEffect(() => { isMetaMaskReady && setActiveAccount(ethereum.selectedAddress) && ethEnabled(); }, []);
 
-  isMetaMaskReady && window.ethereum.on('accountsChanged', function (accounts) {
+  isMetaMaskReady && ethereum.on('accountsChanged', function (accounts) {
     setActiveAccount(accounts ? accounts[0] : '');
   });
 
