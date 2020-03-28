@@ -19,10 +19,9 @@ const TesterApprovalForm = () => (
     }}
     validationSchema={TesterApprovalFormValidation}
     onSubmit={(values, { setSubmitting }) => {
-      setTimeout(() => {
-        console.log(values)
-        setSubmitting(false);
-      }, 1000);
+      const testerId = `${values.id}::${values.name}`;
+      approveTester(values.address, testerId);
+      setSubmitting(false);
     }}
   >
     {({ isSubmitting, values }) => (
