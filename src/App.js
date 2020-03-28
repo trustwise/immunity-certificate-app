@@ -1,38 +1,40 @@
 
-import React from "react";
+import React, { Fragment } from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 
-import Home from './Home'
-import TesterApproval from './TesterApproval'
+import Header from './Header';
+import Home from './Home';
+import Navigation from './Navigation';
+import TesterApproval from './TesterApproval';
+import { AccountNotReady , MetaMaskNotReady } from './core/alerts'
 
 
 const App = ({ projectTitle }) => {
+  const isMetaMaskReady = window.ethereum && window.ethereum.isMetaMask;
+  const isAccountReady = isMetaMaskReady && ethereum.selectedAddress;
+
   return (
     <Router>
       <div className="container">
-        <div className="row">
-          <div className="column">
-            <h1><Link to="/">{projectTitle}</Link></h1>
-          </div>
-        </div>
-        <div className="row">
-          <div className="column">
-            <Link className="button" to="/tester-approval/">Tester Approval</Link>
-          </div>
-        </div>
-        <Switch>
-          <Route path="/tester-approval/">
-            <TesterApproval />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
+        <Header title={projectTitle} />
+        {isMetaMaskReady ? !isAccountReady && <AccountNotReady /> : <MetaMaskNotReady />}
+        {isAccountReady && (
+          <Fragment>
+            <Navigation />
+            <Switch>
+              <Route path="/tester-approval/">
+                <TesterApproval />
+              </Route>
+              <Route path="/">
+                <Home />
+              </Route>
+            </Switch>
+          </Fragment>
+        )}
       </div>
     </Router>
   );
