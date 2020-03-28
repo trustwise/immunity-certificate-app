@@ -1,11 +1,12 @@
-$primary_color: #9b4dca;
-$heading_color: #606c76;
+@charset "utf-8";
+@import './settings.scss';
+@import '~milligram/src/milligram.sass';
 
 h1 {
   a {
-    color: $heading_color;
+    color: $color-secondary;
     &:hover {
-      color: $primary_color;
+      color: $color-primary;
     }
   }
 }
