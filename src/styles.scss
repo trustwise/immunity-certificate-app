@@ -1,0 +1,11 @@
+$primary_color: #9b4dca;
+$heading_color: #606c76;
+
+h1 {
+  a {
+    color: $heading_color;
+    &:hover {
+      color: $primary_color;
+    }
+  }
+}
