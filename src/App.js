@@ -15,7 +15,7 @@ import { AccountNotReady , MetaMaskNotReady } from './core/alerts'
 
 const App = ({ projectTitle }) => {
 
-  const isMetaMaskReady = window.ethereum && window.ethereum.isMetaMask;
+  const isMetaMaskReady = window.ethereum !== 'undefined' && window.ethereum.isMetaMask !== 'undefined';
 
   const [activeAccount, setActiveAccount] = useState('');
 
