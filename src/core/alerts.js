@@ -11,8 +11,10 @@ export const MetaMaskNotReady = () => (
 export const AccountNotReady = () => {
     return (
         <div className="message">
-            <p>Please enable access to the Ethereum network.</p>
-            <button className="button" onClick={(_e) => { window.ethEnabled(); }}>Enable</button>
+            <p>You need to connect to MetaMask before you can continue.</p>
+            <button className="button" onClick={(_e) => { window.ethEnabled(); }}>
+                Connect
+            </button>
         </div>
     )
 };
