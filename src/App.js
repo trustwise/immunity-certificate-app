@@ -15,7 +15,7 @@ import { AccountNotReady , MetaMaskNotReady } from './core/alerts'
 
 const App = ({ projectTitle }) => {
   const isMetaMaskReady = window.ethereum && window.ethereum.isMetaMask;
-  const isAccountReady = isMetaMaskReady && ethereum.selectedAddress;
+  const isAccountReady = isMetaMaskReady && window.ethereum.selectedAddress;
 
   return (
     <Router>
