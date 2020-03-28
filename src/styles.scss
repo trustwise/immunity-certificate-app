@@ -2,24 +2,35 @@
 @import './settings.scss';
 @import '~milligram/src/milligram.sass';
 
+// Utilities
+.centered { margin: 0 auto; }
+.limit-width { max-width: 40rem; }
+.outline { border: 1px solid $color-primary; border-radius: 4px; }
+.padded { padding: 2rem; }
 
+// Layout
 html {
   text-align: center;
 }
 
+// Headings
 h1 {
   a {
     color: $color-secondary;
-    &:hover {
-      color: $color-primary;
-    }
+    &:hover { color: $color-primary; }
   }
 }
 
+// Forms
+form {
+  @extend .centered;
+  @extend .limit-width;
+}
+
+// Messages
 .message {
-  border: 1px solid $color-primary;
-  border-radius: 4px;
-  padding: 2rem;
-  max-width: 40rem;
-  margin: 0 auto;
+  @extend .outline;
+  @extend .padded;
+  @extend .centered;
+  @extend .limit-width;
 }
