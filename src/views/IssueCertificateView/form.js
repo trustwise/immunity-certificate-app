@@ -2,23 +2,39 @@ import React from "react";
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
-import { TextField } from '../../core/forms/fields';
+import { DateField, TextField, TimeField } from '../../core/forms/fields';
 
 
 const IssueCertificateForm = () => (
   <Formik
     initialValues={{
       idNumber: '',
-      testKitID: '',
-      timestamp: '',
+      testKitId: '',
+      expiryDate: '',
+      expiryTime: '',
+      sampleDate: '',
+      sampleTime: '',
     }}
     validationSchema={Yup.object({
       idNumber: Yup.string().required('This field is required'),
-      testKitID: Yup.string().required('This field is required'),
-      timestamp: Yup.string().required('This field is required'),
+      testKitId: Yup.string().required('This field is required'),
+      expiryDate: Yup.string().required('This field is required'),
+      expiryTime: Yup.string().required('This field is required'),
+      sampleDate: Yup.string().required('This field is required'),
+      sampleTime: Yup.string().required('This field is required'),
     })}
     onSubmit={(values, { setSubmitting }) => {
-      console.log(values)
+      // TODO generate pepper
+      const pepper = 'TODO';
+      const personHash = web3.utils.sha3(`${values.idNumber}::${pepper}`);
+      const sampleTimestamp = Date.parse(`${values.sampleDate}T${values.sampleTime}`);
+      const expiryTimestamp = Date.parse(`${values.expiryDate}T${values.expiryTime}`);
+      issueCertificate(
+        personHash,
+        sampleTimestamp,
+        expiryTimestamp,
+        values.testKitId,
+      )
       setSubmitting(false);
     }}
   >
@@ -28,18 +44,21 @@ const IssueCertificateForm = () => (
           label="ID Number"
           name="idNumber"
           type="text"
-          placeholder="12345678"
         />
         <TextField
           label="Test Kit ID"
-          name="testKitID"
+          name="testKitId"
           type="text"
         />
-        <TextField
-          label="Date and Time"
-          name="timestamp"
-          type="text"
-        />
+
+        <label htmlFor="sampleDate">Sample Date and Time</label>
+        <DateField name="sampleDate" />
+        <TimeField name="sampleTime" />
+
+        <label htmlFor="expiryDate">Expiry Date and Time</label>
+        <DateField name="expiryDate" />
+        <TimeField name="expiryTime" />
+
         <button className="button" type="submit" disabled={isSubmitting}>
           Submit
         </button>
