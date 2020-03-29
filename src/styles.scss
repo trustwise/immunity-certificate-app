@@ -31,6 +31,9 @@ form {
   @extend .centered;
   @extend .limit-width;
 }
+label {
+  text-align: left;
+}
 .field-error {
   color: $color-primary;
   text-align: left;
