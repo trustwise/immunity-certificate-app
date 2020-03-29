@@ -18,17 +18,35 @@ const App = ({ projectTitle }) => {
   const isMetaMaskReady = 'ethereum' in window && 'isMetaMask' in ethereum && ethereum.isMetaMask;
 
   const [activeAccount, setActiveAccount] = useState('');
-
   useEffect(() => {
     if (isMetaMaskReady) {
       setActiveAccount(ethereum.selectedAddress)
       ethEnabled();
     }
   }, []);
-
   isMetaMaskReady && ethereum.on('accountsChanged', function (accounts) {
     setActiveAccount(accounts ? accounts[0] : '');
   });
+
+  const [isAuthorityAccount, setIsAuthorityAccount] = useState(false);
+  useEffect(() => {
+    if (!activeAccount) { setIsAuthorityAccount(false); return; }
+    try {
+      isAuthority(activeAccount).then(result => setIsAuthorityAccount(result));
+    } catch {
+      setIsAuthorityAccount(false);
+    }
+  }, [activeAccount]);
+
+  const [isTesterAccount, setIsTesterAccount] = useState(false);
+  useEffect(() => {
+    if (!activeAccount) { setIsTesterAccount(false); return; }
+    try {
+      isTester(activeAccount).then(result => setIsTesterAccount(result));
+    } catch {
+      setIsTesterAccount(false);
+    }
+  }, [activeAccount]);
 
   return (
     <Router>
@@ -40,7 +58,7 @@ const App = ({ projectTitle }) => {
             <Navigation />
             <Switch>
               <Route path="/tester-approval/">
-                <TesterApproval />
+                {isAuthorityAccount ? <TesterApproval /> : "This view is accessible only by authorities."}
               </Route>
               <Route path="/">
                 <Home />
