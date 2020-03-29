@@ -10,7 +10,8 @@ import Header from './Header';
 import Home from './Home';
 import Navigation from './Navigation';
 import TesterApproval from './TesterApproval';
-import { Message, AccountNotConnected, MetaMaskNotAvailable } from './core/messages'
+import { Message, AccountNotConnected, MetaMaskNotAvailable } from './core/messages';
+import { ethEnabled, isAuthority, isTester } from './blockchain';
 
 
 const App = ({ projectTitle }) => {
@@ -31,21 +32,13 @@ const App = ({ projectTitle }) => {
   const [isAuthorityAccount, setIsAuthorityAccount] = useState(false);
   useEffect(() => {
     if (!activeAccount) { setIsAuthorityAccount(false); return; }
-    try {
-      isAuthority(activeAccount).then(result => setIsAuthorityAccount(result));
-    } catch {
-      setIsAuthorityAccount(false);
-    }
+    isAuthority(activeAccount).then(result => setIsAuthorityAccount(result));
   }, [activeAccount]);
 
   const [isTesterAccount, setIsTesterAccount] = useState(false);
   useEffect(() => {
     if (!activeAccount) { setIsTesterAccount(false); return; }
-    try {
-      isTester(activeAccount).then(result => setIsTesterAccount(result));
-    } catch {
-      setIsTesterAccount(false);
-    }
+    isTester(activeAccount).then(result => setIsTesterAccount(result));
   }, [activeAccount]);
 
   return (

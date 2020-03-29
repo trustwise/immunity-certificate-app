@@ -1,4 +1,6 @@
 import React from "react";
+import { ethEnabled } from '../blockchain';
+
 
 export const Message = ({ children }) => <div className="message">{children}</div>;
 
@@ -13,7 +15,7 @@ export const MetaMaskNotAvailable = () => (
 export const AccountNotConnected = () => (
   <Message>
     <p>You need to connect to MetaMask before you can continue.</p>
-    <button className="button" onClick={(_e) => { window.ethEnabled(); }}>
+    <button className="button" onClick={(_e) => { ethEnabled(); }}>
         Connect
     </button>
   </Message>
