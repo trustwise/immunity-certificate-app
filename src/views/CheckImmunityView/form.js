@@ -2,30 +2,35 @@ import React from "react";
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
-import { TextField } from '../../core/forms/fields';
+import { TextField, FileField } from '../../core/forms/fields';
 import Web3 from "web3";
 
 
 const CheckImmunityForm = () => (
   <Formik
     initialValues={{
-      id: '',
+      personalCode: '',
+      qr: undefined,
     }}
     validationSchema={Yup.object({
-      id: Yup.string().required('This field is required'),
+      personalCode: Yup.string().required('This field is required'),
+      qr: Yup.mixed().test("fileformat", "Unsupported format", value => value && [ "image/jpg", "image/jpeg", "image/gif", "image/png" ].includes(value.type)),
     })}
     onSubmit={(values, { setSubmitting }) => {
-      const address = Web3.utils.sha3(`${values.id}`);
-      console.log("address: ", address)
-      getLastCertificate(address);
+      const personalCode = Web3.utils.sha3(`${values.personalCode}`);
+      getLastCertificate(personalCode).then((result) => { console.log(result); });
       setSubmitting(false);
     }}
   >
     {({ isSubmitting, values }) => (
       <Form>
+        <FileField
+          label="Personal QR Code"
+          name="qr"
+        />
         <TextField
           label="Personal Code"
-          name="id"
+          name="personalCode"
           type="text"
           placeholder=""
         />

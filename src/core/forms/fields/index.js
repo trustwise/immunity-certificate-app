@@ -3,3 +3,4 @@
  */
 
 export { default as TextField } from './text';
+export { default as FileField } from './file';
