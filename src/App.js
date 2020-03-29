@@ -48,7 +48,7 @@ const App = ({ projectTitle }) => {
         {isMetaMaskAvailable ? !activeAccount && <AccountNotConnected /> : <MetaMaskNotAvailable />}
         {activeAccount && (
           <Fragment>
-            <Navigation />
+            <Navigation isAuthorityAccount={isAuthorityAccount} isTesterAccount={isTesterAccount} />
             <Switch>
               <Route path="/tester-approval/">
                 {isAuthorityAccount ? <TesterApproval /> : <Message>This view is accessible only by authorities.</Message>}

@@ -2,10 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 
-const Navigation = () => (
+const Navigation = ({isAuthorityAccount, isTesterAccount}) => (
   <nav className="row">
     <div className="column">
-      <Link className="button button-outline" to="/tester-approval/">Tester Approval</Link>
+      {isAuthorityAccount && <Link className="button button-outline" to="/tester-approval/">Tester Approval</Link>}
     </div>
   </nav>
 );
