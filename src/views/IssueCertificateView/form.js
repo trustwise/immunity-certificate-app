@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
-import { TextField } from '../../core/forms/fields';
+import { DateField, TextField, TimeField } from '../../core/forms/fields';
 
 
 const IssueCertificateForm = () => (
@@ -10,12 +10,14 @@ const IssueCertificateForm = () => (
     initialValues={{
       idNumber: '',
       testKitID: '',
-      timestamp: '',
+      date: '',
+      time: '',
     }}
     validationSchema={Yup.object({
       idNumber: Yup.string().required('This field is required'),
       testKitID: Yup.string().required('This field is required'),
-      timestamp: Yup.string().required('This field is required'),
+      date: Yup.string().required('This field is required'),
+      time: Yup.string().required('This field is required'),
     })}
     onSubmit={(values, { setSubmitting }) => {
       console.log(values)
@@ -35,10 +37,12 @@ const IssueCertificateForm = () => (
           name="testKitID"
           type="text"
         />
-        <TextField
+        <DateField
           label="Date and Time"
-          name="timestamp"
-          type="text"
+          name="date"
+        />
+        <TimeField
+          name="time"
         />
         <button className="button" type="submit" disabled={isSubmitting}>
           Submit
