@@ -9,7 +9,7 @@ import {
 import Header from './Header';
 import Home from './Home';
 import Navigation from './Navigation';
-import TesterApproval from './TesterApproval';
+import TesterApprovalView from './TesterApprovalView';
 import { Message, AccountNotConnected, MetaMaskNotAvailable } from './core/messages';
 import { enableEthereum, isAuthority, isTester } from './blockchain';
 
@@ -51,7 +51,7 @@ const App = ({ projectTitle }) => {
             <Navigation isAuthorityAccount={isAuthorityAccount} isTesterAccount={isTesterAccount} />
             <Switch>
               <Route path="/tester-approval/">
-                {isAuthorityAccount ? <TesterApproval /> : <Message>This view is accessible only by authorities.</Message>}
+                {isAuthorityAccount ? <TesterApprovalView /> : <Message>This view is accessible only by authorities.</Message>}
               </Route>
               <Route path="/">
                 <Home />

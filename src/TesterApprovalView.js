@@ -2,7 +2,7 @@
 import React from "react";
 import TesterApprovalForm from './TesterApprovalForm'
 
-const TesterApproval = () => (
+const TesterApprovalView = () => (
   <div className="row">
     <div className="column">
       <h2>Tester Approval</h2>
@@ -12,4 +12,4 @@ const TesterApproval = () => (
 );
 
 
-export default TesterApproval;
+export default TesterApprovalView;
