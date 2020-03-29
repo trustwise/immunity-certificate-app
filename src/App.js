@@ -9,7 +9,7 @@ import {
 import Header from './Header';
 import Home from './Home';
 import Navigation from './Navigation';
-import TesterApprovalView from './TesterApprovalView';
+import TesterApprovalView from './TesterApproval';
 import { Message, AccountNotConnected, MetaMaskNotAvailable } from './core/messages';
 import { enableEthereum, isAuthority, isTester } from './blockchain';
 

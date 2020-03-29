@@ -2,13 +2,8 @@ import React from "react";
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
-import TextField from './core/forms/fields/text';
+import TextField from '../core/forms/fields/text';
 
-const TesterApprovalFormValidation = Yup.object({
-  name: Yup.string().required('This field is required'),
-  id: Yup.string().required('This field is required'),
-  address: Yup.string().required('This field is required'),
-});
 
 const TesterApprovalForm = () => (
   <Formik
@@ -17,7 +12,11 @@ const TesterApprovalForm = () => (
       id: '',
       address: '',
     }}
-    validationSchema={TesterApprovalFormValidation}
+    validationSchema={Yup.object({
+      name: Yup.string().required('This field is required'),
+      id: Yup.string().required('This field is required'),
+      address: Yup.string().required('This field is required'),
+    })}
     onSubmit={(values, { setSubmitting }) => {
       const testerId = `${values.id}::${values.name}`;
       approveTester(values.address, testerId);

@@ -1,6 +1,6 @@
 
 import React from "react";
-import TesterApprovalForm from './TesterApprovalForm'
+import TesterApprovalForm from './form'
 
 const TesterApprovalView = () => (
   <div className="row">
