@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
-import TextField from '../core/forms/fields/text';
+import { TextField } from '../core/forms/fields';
 
 
 const TesterApprovalForm = () => (
