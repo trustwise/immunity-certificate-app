@@ -3,6 +3,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
 import { DateField, TextField, TimeField } from '../../core/forms/fields';
+import { generatePepper } from "../../core/utils";
 
 
 const IssueCertificateForm = () => (
@@ -24,8 +25,7 @@ const IssueCertificateForm = () => (
       sampleTime: Yup.string().required('This field is required'),
     })}
     onSubmit={(values, { setSubmitting }) => {
-      // TODO generate pepper
-      const pepper = 'TODO';
+      const pepper = generatePepper(8);
       const personHash = web3.utils.sha3(`${values.idNumber}::${pepper}`);
       const sampleTimestamp = Date.parse(`${values.sampleDate}T${values.sampleTime}`);
       const expiryTimestamp = Date.parse(`${values.expiryDate}T${values.expiryTime}`);
