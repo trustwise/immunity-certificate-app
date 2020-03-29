@@ -2,7 +2,7 @@
 import React from "react";
 
 
-const Home = () => (
+const IndexView = () => (
   <div className="row">
     <div className="column">
       <h2>Home</h2>
@@ -11,4 +11,4 @@ const Home = () => (
 );
 
 
-export default Home;
+export default IndexView;
