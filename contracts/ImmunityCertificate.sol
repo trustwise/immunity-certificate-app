@@ -15,8 +15,8 @@ contract ImmunityCertificate {
     mapping (bytes32=>Certificate[]) certificates;
     address public registryContract;
 
-    event CertificateIssued(bytes32 indexed personHash, address indexed tester, string indexed testKitId, uint256 expiryTimestamp);
-    event CertificateRevoked(bytes32 indexed personHash, address indexed tester, string indexed testKitId, address msgSender);
+    event CertificateIssued(bytes32 indexed personHash, address indexed tester, string indexed testKitId, uint256 expiryTimestamp, uint256 index);
+    event CertificateRevoked(bytes32 indexed personHash, address indexed tester, string indexed testKitId, address msgSender, uint256 index);
 
     constructor (address registry, string memory _description) public {
         registryContract = registry;
@@ -41,7 +41,7 @@ contract ImmunityCertificate {
             tester: msg.sender,
             revoked: false
         }));
-        emit CertificateIssued(personHash, msg.sender, testKitId, expiryTimestamp);
+        emit CertificateIssued(personHash, msg.sender, testKitId, expiryTimestamp, certificates[personHash].length - 1);
     }
 
     function revoke(bytes32 personHash, uint256 certIndex) public onlyAuthority {
@@ -49,7 +49,7 @@ contract ImmunityCertificate {
         Certificate storage cert = certificates[personHash][certIndex];
         require(!cert.revoked, "IC: Certificate is already revoked.");
         cert.revoked = true;
-        emit CertificateRevoked(personHash, cert.tester, cert.testKitId, msg.sender);
+        emit CertificateRevoked(personHash, cert.tester, cert.testKitId, msg.sender, certIndex);
     }
 
     function getLastCertificate(bytes32 personHash) external view

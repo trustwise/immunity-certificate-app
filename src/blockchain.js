@@ -1,6 +1,7 @@
 
 import Web3 from 'web3';
 import './abis';
+import './contractAddresses';
 
 export const enableEthereum = async () => {
   if (window.ethereum) {
@@ -17,8 +18,8 @@ export const enableEthereum = async () => {
   return false;
 }
 
-const getRegistryContract = () => new web3.eth.Contract(registryAbi, '0x98EBC26814A37148e12eef1C5905Ae1EcB348f8F');
-const getCertificateContract = () => new web3.eth.Contract(immunityCertificateAbi, '0xf0037db789d43d93BAfa6Df8e56a3813d4bF367a');
+const getRegistryContract = () => new web3.eth.Contract(registryAbi, registryAddress);
+const getCertificateContract = () => new web3.eth.Contract(immunityCertificateAbi, certificateAddress);
 
 export const isAuthority = async (address) => (await getRegistryContract().methods.isApprovingAuthority(address).call());
 export const isTester = async (address) => (await getRegistryContract().methods.isTester(address).call());

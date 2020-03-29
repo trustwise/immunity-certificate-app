@@ -41,6 +41,12 @@ immunityCertificateAbi = [
 				"internalType": "uint256",
 				"name": "expiryTimestamp",
 				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "index",
+				"type": "uint256"
 			}
 		],
 		"name": "CertificateIssued",
@@ -72,6 +78,12 @@ immunityCertificateAbi = [
 				"internalType": "address",
 				"name": "msgSender",
 				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "index",
+				"type": "uint256"
 			}
 		],
 		"name": "CertificateRevoked",
