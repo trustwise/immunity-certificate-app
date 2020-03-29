@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 
 import { Header, Navigation } from './core/components';
-import { IndexView, TesterApprovalView } from './views';
+import { IndexView, IssueCertificateView, TesterApprovalView } from './views';
 import { Message, AccountNotConnected, MetaMaskNotAvailable } from './core/messages';
 import { enableEthereum, isAuthority, isTester } from './blockchain';
 
@@ -50,6 +50,9 @@ const App = ({ projectTitle }) => {
             <Switch>
               <Route path="/tester-approval/">
                 {isAuthorityAccount ? <TesterApprovalView /> : <Message>This view is accessible only by authorities.</Message>}
+              </Route>
+              <Route path="/issue-certificate/">
+                {isTesterAccount ? <IssueCertificateView /> : <Message>This view is accessible only by testers.</Message>}
               </Route>
               <Route path="/">
                 <IndexView />
