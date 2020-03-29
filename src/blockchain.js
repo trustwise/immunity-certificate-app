@@ -43,8 +43,8 @@ const onEthereumEnabled = () => {
         await certificateContract.methods.issue(personHash, sampleTimestamp, expiryTimestamp, testKitId).send({from: await getSender()})
     );
 
-    window.isAuthority = isAuthority;
     window.getTesterId = getTesterId;
+    window.approveTester = approveTester;
     window.getLastCertificate = getLastCertificate;
     window.issueCertificate = issueCertificate;
 };
