@@ -1,7 +1,7 @@
 
 import Web3 from 'web3';
 import './abis';
-import './contractAddresses';
+import {registryAddress, certificateAddress} from './contractAddresses';
 
 export const enableEthereum = async () => {
   if (window.ethereum) {
