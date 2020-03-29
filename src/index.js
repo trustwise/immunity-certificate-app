@@ -8,4 +8,4 @@ import "./blockchain";
 module.hot && module.hot.accept()
 
 var mountNode = document.getElementById("app");
-ReactDOM.render(<App projectTitle="Immunity Certificate" />, mountNode);
+ReactDOM.render(<App />, mountNode);

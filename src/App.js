@@ -12,7 +12,7 @@ import { Message, AccountNotConnected, MetaMaskNotAvailable } from './core/messa
 import { enableEthereum, isAuthority, isTester } from './blockchain';
 
 
-const App = ({ projectTitle }) => {
+const App = () => {
 
   const isMetaMaskAvailable = 'ethereum' in window && 'isMetaMask' in ethereum && ethereum.isMetaMask;
 
@@ -42,7 +42,7 @@ const App = ({ projectTitle }) => {
   return (
     <Router>
       <div className="container">
-        <Header title={projectTitle} />
+        <Header title="Immunity Certificates" />
         {isMetaMaskAvailable ? !activeAccount && <AccountNotConnected /> : <MetaMaskNotAvailable />}
         {activeAccount && (
           <Fragment>
