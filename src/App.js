@@ -11,7 +11,7 @@ import Home from './Home';
 import Navigation from './Navigation';
 import TesterApproval from './TesterApproval';
 import { Message, AccountNotConnected, MetaMaskNotAvailable } from './core/messages';
-import { ethEnabled, isAuthority, isTester } from './blockchain';
+import { enableEthereum, isAuthority, isTester } from './blockchain';
 
 
 const App = ({ projectTitle }) => {
@@ -22,7 +22,7 @@ const App = ({ projectTitle }) => {
   useEffect(() => {
     if (isMetaMaskAvailable) {
       setActiveAccount(ethereum.selectedAddress)
-      ethEnabled();
+      enableEthereum();
     }
   }, []);
   isMetaMaskAvailable && ethereum.on('accountsChanged', function (accounts) {

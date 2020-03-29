@@ -2,7 +2,7 @@
 import Web3 from 'web3';
 import './abis';
 
-export const ethEnabled = async () => {
+export const enableEthereum = async () => {
   if (window.ethereum) {
     window.web3 = new Web3(window.ethereum);
     try {
@@ -11,7 +11,7 @@ export const ethEnabled = async () => {
     catch {
         return false;
     }
-    onEthEnabled();
+    onEthereumEnabled();
     return true;
   }
   return false;
@@ -24,7 +24,7 @@ export const isAuthority = async (address) => (await getRegistryContract().metho
 export const isTester = async (address) => (await getRegistryContract().methods.isTester(address).call());
 
 
-const onEthEnabled = () => {
+const onEthereumEnabled = () => {
     const registryContract = getRegistryContract();
     const certificateContract = getCertificateContract();
 
