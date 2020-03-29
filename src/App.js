@@ -10,21 +10,21 @@ import Header from './Header';
 import Home from './Home';
 import Navigation from './Navigation';
 import TesterApproval from './TesterApproval';
-import { AccountNotReady , MetaMaskNotReady } from './core/alerts'
+import { Message, AccountNotConnected, MetaMaskNotAvailable } from './core/messages'
 
 
 const App = ({ projectTitle }) => {
 
-  const isMetaMaskReady = 'ethereum' in window && 'isMetaMask' in ethereum && ethereum.isMetaMask;
+  const isMetaMaskAvailable = 'ethereum' in window && 'isMetaMask' in ethereum && ethereum.isMetaMask;
 
   const [activeAccount, setActiveAccount] = useState('');
   useEffect(() => {
-    if (isMetaMaskReady) {
+    if (isMetaMaskAvailable) {
       setActiveAccount(ethereum.selectedAddress)
       ethEnabled();
     }
   }, []);
-  isMetaMaskReady && ethereum.on('accountsChanged', function (accounts) {
+  isMetaMaskAvailable && ethereum.on('accountsChanged', function (accounts) {
     setActiveAccount(accounts ? accounts[0] : '');
   });
 
@@ -52,13 +52,13 @@ const App = ({ projectTitle }) => {
     <Router>
       <div className="container">
         <Header title={projectTitle} />
-        {isMetaMaskReady ? !activeAccount && <AccountNotReady /> : <MetaMaskNotReady />}
+        {isMetaMaskAvailable ? !activeAccount && <AccountNotConnected /> : <MetaMaskNotAvailable />}
         {activeAccount && (
           <Fragment>
             <Navigation />
             <Switch>
               <Route path="/tester-approval/">
-                {isAuthorityAccount ? <TesterApproval /> : "This view is accessible only by authorities."}
+                {isAuthorityAccount ? <TesterApproval /> : <Message>This view is accessible only by authorities.</Message>}
               </Route>
               <Route path="/">
                 <Home />
