@@ -21,9 +21,9 @@ const IssueCertificateForm = () => {
         identityMethod: 'create',
         idNumber: '',
         testKitId: '',
-        expiryDate: '2021-03-29',
+        expiryDate: '',
         expiryTime: '09:00',
-        sampleDate: '2020-03-29',
+        sampleDate: '',
         sampleTime: '09:00',
       }}
       validationSchema={Yup.object({
