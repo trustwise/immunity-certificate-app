@@ -18,6 +18,11 @@ export const enableEthereum = async () => {
   return false;
 }
 
+export const enableInfura = () => {
+    window.web3 = new Web3(new Web3.providers.HttpProvider('https://kovan.infura.io/v3/7cccdeb059324564b6c25c792852196b'));
+    onEthereumEnabled();
+};
+
 const getRegistryContract = () => new web3.eth.Contract(registryAbi, registryAddress);
 const getCertificateContract = () => new web3.eth.Contract(immunityCertificateAbi, certificateAddress);
 

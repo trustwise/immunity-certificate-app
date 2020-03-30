@@ -4,6 +4,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  // useLocation,
 } from "react-router-dom";
 
 import { Header, Navigation } from './core/components';
@@ -13,6 +14,14 @@ import { enableEthereum, isAuthority, isTester } from './blockchain';
 
 
 const App = () => {
+
+  // let location = useLocation();
+  // useEffect(
+  //   () => {
+  //     console.log(location)
+  //   },
+  //   [location]
+  // )
 
   const isMetaMaskAvailable = 'ethereum' in window && 'isMetaMask' in ethereum && ethereum.isMetaMask;
 
@@ -43,26 +52,25 @@ const App = () => {
     <Router>
       <div className="container">
         <Header title="Immunity Certificates" />
-        {isMetaMaskAvailable ? !activeAccount && <AccountNotConnected /> : <MetaMaskNotAvailable />}
-        {activeAccount && (
-          <Fragment>
-            <Navigation isAuthorityAccount={isAuthorityAccount} isTesterAccount={isTesterAccount} />
-            <Switch>
-              <Route path="/tester-approval/">
-                {isAuthorityAccount ? <TesterApprovalView /> : <Message>This view is accessible only by authorities.</Message>}
-              </Route>
-              <Route path="/issue-certificate/">
-                {isTesterAccount ? <IssueCertificateView /> : <Message>This view is accessible only by testers.</Message>}
-              </Route>
-              <Route path="/check-immunity/">
-                {isMetaMaskAvailable ? <CheckImmunityView /> : <Message>You need metamask for this view.</Message>}
-              </Route>
-              <Route path="/">
-                <IndexView />
-              </Route>
-            </Switch>
-          </Fragment>
-        )}
+        <Fragment>
+          <Navigation isAuthorityAccount={isAuthorityAccount} isTesterAccount={isTesterAccount} />
+          <Switch>
+            <Route path="/tester-approval/">
+              {isMetaMaskAvailable ? !activeAccount && <AccountNotConnected /> : <MetaMaskNotAvailable />}
+              {isMetaMaskAvailable && activeAccount && isAuthorityAccount ? <TesterApprovalView /> : <Message>This view is accessible only by authorities.</Message>}
+            </Route>
+            <Route path="/issue-certificate/">
+              {isMetaMaskAvailable ? !activeAccount && <AccountNotConnected /> : <MetaMaskNotAvailable />}
+              {isMetaMaskAvailable && activeAccount && isTesterAccount ? <IssueCertificateView /> : <Message>This view is accessible only by testers.</Message>}
+            </Route>
+            <Route path="/check-immunity/">
+              <CheckImmunityView />
+            </Route>
+            <Route path="/">
+              <IndexView />
+            </Route>
+          </Switch>
+        </Fragment>
       </div>
     </Router>
   );
