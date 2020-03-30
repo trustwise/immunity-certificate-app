@@ -41,7 +41,7 @@ const App = () => {
 
   return (
     <Router>
-      <div className="container">
+      <div className="container container-app">
         <Header title="Immunity Certificates" />
         <Fragment>
           <Navigation isAuthorityAccount={isAuthorityAccount} isTesterAccount={isTesterAccount} />
