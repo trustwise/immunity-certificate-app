@@ -6,6 +6,10 @@ import * as Yup from 'yup';
 import { DateField, TextField, TimeField } from '../../core/forms/fields';
 import { generatePepper } from "../../core/utils";
 
+const today = new Date();
+const todayStr = today.toISOString().slice(0, 10);
+const inSixMonthsStr = new Date(today.setMonth(today.getMonth() + 6)).toISOString().slice(0, 10);
+
 const IssueCertificateForm = () => {
 
   const [qrValue, setQrValue] = useState('');
@@ -22,9 +26,9 @@ const IssueCertificateForm = () => {
         identityMethod: 'create',
         idNumber: '',
         testKitId: '',
-        expiryDate: '',
+        expiryDate: inSixMonthsStr,
         expiryTime: '09:00',
-        sampleDate: '',
+        sampleDate: todayStr,
         sampleTime: '09:00',
       }}
       validationSchema={Yup.object({
