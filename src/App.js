@@ -4,7 +4,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  // useLocation,
 } from "react-router-dom";
 
 import { Header, Navigation } from './core/components';
@@ -14,14 +13,6 @@ import { enableEthereum, isAuthority, isTester } from './blockchain';
 
 
 const App = () => {
-
-  // let location = useLocation();
-  // useEffect(
-  //   () => {
-  //     console.log(location)
-  //   },
-  //   [location]
-  // )
 
   const isMetaMaskAvailable = 'ethereum' in window && 'isMetaMask' in ethereum && ethereum.isMetaMask;
 
