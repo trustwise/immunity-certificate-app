@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Formik, Form } from 'formik';
 import QRCode from 'qrcode.react';
 import * as Yup from 'yup';
@@ -47,26 +47,41 @@ const IssueCertificateForm = () => {
         setSubmitting(false);
       }}
     >
-      {({ isSubmitting, values }) => (
+      {({ isSubmitting, values, setFieldValue, handleBlur, handleChange }) => (
         <Form>
           <h2>Choose Identity</h2>
           <div className="text-align-left">
-            <input type="radio" id="identityMethod_1" name="identityMethod" value="create" checked />
-            <label className="label-inline" htmlFor="identityMethod_1">Create new identity</label>
+            <input
+              type="radio"
+              id="identityMethod_1"
+              name="identityMethod"
+              value="create"
+              checked={values.identityMethod == 'create'}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            <label className="label-inline" htmlFor="identityMethod_1" >Create new identity</label>
             <br/>
-            <input type="radio" id="identityMethod_2" name="identityMethod" value="scan" />
+            <input
+              type="radio"
+              id="identityMethod_2"
+              name="identityMethod"
+              value="scan"
+              checked={values.identityMethod == 'scan'}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
             <label className="label-inline" htmlFor="identityMethod_2">Scan existing ID</label>
           </div>
 
-          <TextField
-            label="ID Number"
-            name="idNumber"
-            type="text"
-          />
-
-          <button className="button" type="button" onClick={(_e) => onCreateClick(values)} >
-            Create
-          </button>
+          { values.identityMethod === 'create' && (
+            <Fragment>
+              <TextField label="ID Number" name="idNumber" type="text" />
+              <button className="button" type="button" onClick={(_e) => onCreateClick(values)} >
+                Create
+              </button>
+            </Fragment>
+          )}
 
           { qrValue && <QRCode className="qr-code-img" value={qrValue} level="H" /> }
 
