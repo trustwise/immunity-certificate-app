@@ -35,19 +35,19 @@ This can be done easily with MetaMask and Remix. Be sure that `Authority` accoun
 First install dependencies:
 
 ```sh
-npm install
+yarn install
 ```
 
 To run in hot module reloading mode:
 
 ```sh
-npm start
+yarn start
 ```
 
 To create a production build:
 
 ```sh
-npm run build-prod
+yarn build-prod
 ```
 
 ## Running
@@ -55,6 +55,5 @@ npm run build-prod
 Open the file `dist/index.html` in your browser
 
 ## Credits
-
-Made with [createapp.dev](https://createapp.dev/)
-
+- Project boilerplate by [createapp.dev](https://createapp.dev/)
+- Check-mark animated SVG adapted from [Alexander Haniotis](https://codepen.io/haniotis)
