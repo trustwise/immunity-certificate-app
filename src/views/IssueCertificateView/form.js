@@ -11,6 +11,7 @@ const IssueCertificateForm = () => {
   const [qrValue, setQrValue] = useState('');
 
   const onCreateClick = (values) => {
+    if (!values.idNumber) return false;
     const pepper = generatePepper(8);
     setQrValue(`${values.idNumber}::${pepper}`);
   }
