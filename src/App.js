@@ -48,11 +48,11 @@ const App = () => {
           <Switch>
             <Route path="/tester-approval/">
               {isMetaMaskAvailable ? !activeAccount && <AccountNotConnected /> : <MetaMaskNotAvailable />}
-              {isMetaMaskAvailable && activeAccount && isAuthorityAccount ? <TesterApprovalView /> : <Message>This view is accessible only by authorities.</Message>}
+              {isAuthorityAccount ? <TesterApprovalView /> : <Message>This view is accessible only by authorities.</Message>}
             </Route>
             <Route path="/issue-certificate/">
               {isMetaMaskAvailable ? !activeAccount && <AccountNotConnected /> : <MetaMaskNotAvailable />}
-              {isMetaMaskAvailable && activeAccount && isTesterAccount ? <IssueCertificateView /> : <Message>This view is accessible only by testers.</Message>}
+              {isTesterAccount ? <IssueCertificateView /> : <Message>This view is accessible only by testers.</Message>}
             </Route>
             <Route path="/check-immunity/">
               <CheckImmunityView />
