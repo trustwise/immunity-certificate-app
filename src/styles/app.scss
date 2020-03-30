@@ -21,6 +21,7 @@ html {
   margin-bottom: 16rem;
 }
 
+
 // Headings
 h1 {
   a {
@@ -77,6 +78,11 @@ input[type=date], input[type=time] {
 .qr-code-img {
   display: block;
   margin: 6rem auto;
+}
+
+// QR reader
+.qr-reader {
+  display: none;
 }
 
 // Checkmark

@@ -5,6 +5,11 @@ import * as Yup from 'yup';
 
 import { DateField, TextField, TimeField } from '../../core/forms/fields';
 import { generatePepper } from "../../core/utils";
+import QrReader from '../../core/components/qrReader';
+
+const today = new Date();
+const todayStr = today.toISOString().slice(0, 10);
+const inSixMonthsStr = new Date(today.setMonth(today.getMonth() + 6)).toISOString().slice(0, 10);
 
 const IssueCertificateForm = () => {
 
@@ -20,15 +25,16 @@ const IssueCertificateForm = () => {
     <Formik
       initialValues={{
         identityMethod: 'create',
+        personalCode: '',
         idNumber: '',
         testKitId: '',
-        expiryDate: '',
+        expiryDate: inSixMonthsStr,
         expiryTime: '09:00',
-        sampleDate: '',
+        sampleDate: todayStr,
         sampleTime: '09:00',
       }}
       validationSchema={Yup.object({
-        idNumber: Yup.string().required('This field is required'),
+        idNumber: Yup.string(),
         testKitId: Yup.string().required('This field is required'),
         expiryDate: Yup.string().required('This field is required'),
         expiryTime: Yup.string().required('This field is required'),
@@ -36,7 +42,8 @@ const IssueCertificateForm = () => {
         sampleTime: Yup.string().required('This field is required'),
       })}
       onSubmit={(values, { setSubmitting }) => {
-        const personHash = web3.utils.sha3(qrValue);
+        const valueToHash = values.identityMethod === 'create' ? qrValue : values.personalCode;
+        const personHash = web3.utils.sha3(valueToHash);
         const sampleTimestamp = Date.parse(`${values.sampleDate}T${values.sampleTime}`);
         const expiryTimestamp = Date.parse(`${values.expiryDate}T${values.expiryTime}`);
         issueCertificate(
@@ -81,10 +88,22 @@ const IssueCertificateForm = () => {
               <button className="button" type="button" onClick={(_e) => onCreateClick(values)} >
                 Create
               </button>
+              { qrValue && <QRCode className="qr-code-img" value={qrValue} level="H" /> }
             </Fragment>
           )}
 
-          { qrValue && <QRCode className="qr-code-img" value={qrValue} level="H" /> }
+
+          {values.identityMethod === 'scan' && (
+            <Fragment>
+              <QrReader setFieldValue={setFieldValue} />
+              {values.personalCode && (
+                <Fragment>
+                  <label>ID Number</label>
+                  <input type="text" value={values.personalCode.split('::')[0]} readOnly/>
+                </Fragment>
+              )}
+            </Fragment>
+          )}
 
           <hr />
 
