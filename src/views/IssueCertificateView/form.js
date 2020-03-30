@@ -55,7 +55,7 @@ const IssueCertificateForm = () => {
             <label className="label-inline" htmlFor="identityMethod_1">Create new identity</label>
             <br/>
             <input type="radio" id="identityMethod_2" name="identityMethod" value="scan" />
-            <label className="label-inline" htmlFor="identityMethod_2">Scan QR code</label>
+            <label className="label-inline" htmlFor="identityMethod_2">Scan existing ID</label>
           </div>
 
           <TextField
