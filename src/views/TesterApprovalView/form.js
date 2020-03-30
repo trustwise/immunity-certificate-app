@@ -34,7 +34,6 @@ const TesterApprovalForm = () => (
           label="ID"
           name="id"
           type="text"
-          placeholder="12345678"
         />
         <TextField
           label="Wallet Address"
