@@ -29,6 +29,12 @@ h1 {
 nav {
   margin-bottom: 1rem;
 }
+@media (max-width: 39.99rem) {
+  nav.row .column.column-25 {
+    flex: 1 1 auto;
+    max-width: 100%;
+  }
+}
 
 // Forms
 form {
