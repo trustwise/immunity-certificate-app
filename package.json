@@ -19,6 +19,7 @@
     "qrcode.react": "^1.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-qr-reader": "^2.2.1",
     "react-router-dom": "^5.1.2",
     "web3": "^1.2.6",
     "yup": "^0.28.3"

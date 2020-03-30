@@ -1,22 +1,22 @@
-import React from "react";
+import React, { useState, Fragment } from "react";
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import Web3 from "web3";
 
-import { TextField, FileField } from '../../core/forms/fields';
+import QrReader from '../../core/components/qrReader';
+import { TextField } from '../../core/forms/fields';
 
-
+require('webrtc-adapter');
 const CheckImmunityForm = ({setCertificate, setIsCertificateFetched}) => {
+  const [result, setResult] = useState('No result');
 
   return (
     <Formik
       initialValues={{
         personalCode: '',
-        qr: undefined,
       }}
       validationSchema={Yup.object({
         personalCode: Yup.string().required('This field is required'),
-        // qr: Yup.mixed().test("fileformat", "Unsupported format", value => value && [ "image/jpg", "image/jpeg", "image/gif", "image/png" ].includes(value.type)),
       })}
       onSubmit={(values, { setSubmitting }) => {
         const personalCode = Web3.utils.sha3(`${values.personalCode}`);
@@ -30,12 +30,10 @@ const CheckImmunityForm = ({setCertificate, setIsCertificateFetched}) => {
         console.log("submitting");
       }}
     >
-      {({ isSubmitting, values }) => (
+      {({ isSubmitting, values, setFieldValue }) => (
         <Form>
-          <FileField
-            label="Personal QR Code"
-            name="qr"
-          />
+          <QrReader setFieldValue={setFieldValue} />
+          
           <TextField
             label="Personal Code"
             name="personalCode"
