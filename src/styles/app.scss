@@ -66,3 +66,9 @@ input[type=date], input[type=time] {
   @extend .centered;
   @extend .limit-width;
 }
+
+// QR code
+.qr-code-img {
+  display: block;
+  margin: 6rem auto;
+}

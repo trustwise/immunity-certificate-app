@@ -52,10 +52,10 @@ const IssueCertificateForm = () => {
           <h2>Choose Identity</h2>
           <div className="text-align-left">
             <input type="radio" id="identityMethod_1" name="identityMethod" value="create" checked />
-            <label class="label-inline" htmlFor="identityMethod_1">Create new identity</label>
+            <label className="label-inline" htmlFor="identityMethod_1">Create new identity</label>
             <br/>
             <input type="radio" id="identityMethod_2" name="identityMethod" value="scan" />
-            <label class="label-inline" htmlFor="identityMethod_2">Scan QR code</label>
+            <label className="label-inline" htmlFor="identityMethod_2">Scan QR code</label>
           </div>
 
           <TextField
@@ -68,17 +68,8 @@ const IssueCertificateForm = () => {
             Create
           </button>
 
-          {
-            qrValue && (
-              <div>
-                <br />
-                <br />
-                <QRCode value={qrValue} level="H" />
-                <br />
-                <br />
-              </div>
-            )
-          }
+          { qrValue && <QRCode className="qr-code-img" value={qrValue} level="H" /> }
+
           <hr />
 
           <h2>Issue Certificate</h2>
