@@ -7,9 +7,9 @@ import QrReader from '../../core/components/qrReader';
 import { TextField } from '../../core/forms/fields';
 
 require('webrtc-adapter');
-const CheckImmunityForm = ({setCertificate, setIsCertificateFetched}) => {
-  const [result, setResult] = useState('No result');
 
+const CheckImmunityForm = ({setCertificate, setIsCertificateFetched}) => {
+  
   return (
     <Formik
       initialValues={{
@@ -23,8 +23,14 @@ const CheckImmunityForm = ({setCertificate, setIsCertificateFetched}) => {
 
         getLastCertificate(personalCode).then((result) => {
           console.log(result);
-          setCertificate(result);
-          setIsCertificateFetched(true);
+          getTesterId(result.tester).then(tester => {
+            let tmp = tester.split(":");
+            result.personalCode = values.personalCode.split(":")[0];
+            result.testerId = tmp[0];
+            result.testerName = tmp[2];
+            setCertificate(result);
+            setIsCertificateFetched(true);
+          });
         });
         setSubmitting(false);
         console.log("submitting");
