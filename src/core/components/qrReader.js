@@ -8,14 +8,14 @@ class LegacyModeExample extends Component {
       delay: 100,
       result: '',
     }
-
     this.handleScan = this.handleScan.bind(this)
     this.openImageDialog = this.openImageDialog.bind(this)
   }
   handleScan(result){
     if(result){
       this.setState({ result })
-      this.props.setFieldValue("personalCode", result);
+      this.props.setFieldValue('personalCode', result);
+      this.props.submitForm && this.props.submitForm();
     }
   }
   handleError(err){

@@ -32,19 +32,9 @@ const CheckImmunityForm = ({setCertificate, setIsCertificateFetched}) => {
         setSubmitting(false);
       }}
     >
-      {({ isSubmitting, values, setFieldValue }) => (
+      {({ isSubmitting, values, setFieldValue, submitForm }) => (
         <Form>
-          <QrReader setFieldValue={setFieldValue} />
-          
-          <TextField
-            label="Personal Code"
-            name="personalCode"
-            type="text"
-            placeholder=""
-          />
-          <button className="button" type="submit" disabled={isSubmitting}>
-            Submit
-          </button>
+          <QrReader setFieldValue={setFieldValue} submitForm={submitForm} />
         </Form>
       )}
     </Formik>
