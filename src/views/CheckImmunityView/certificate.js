@@ -14,7 +14,7 @@ const Certificate = ({certificate}) => {
 
     if (certificate.revoked) {
       status = "❌ Certificate revoked";
-    } else if ( certificate.expiryTimestamp < Date.now() ) {
+    } else if ( certificate.expiryTimestamp < (Math.floor(Date.now() / 1000)) ) {
       status = "❌ Certificate expired";
     } else {
       status = "✔ Immune";
