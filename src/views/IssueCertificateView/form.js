@@ -44,8 +44,8 @@ const IssueCertificateForm = () => {
       onSubmit={(values, { setSubmitting }) => {
         const valueToHash = values.identityMethod === 'create' ? qrValue : values.personalCode;
         const personHash = web3.utils.sha3(valueToHash);
-        const sampleTimestamp = Date.parse(`${values.sampleDate}T${values.sampleTime}`);
-        const expiryTimestamp = Date.parse(`${values.expiryDate}T${values.expiryTime}`);
+        const sampleTimestamp = Math.floor(Date.parse(`${values.sampleDate}T${values.sampleTime}`) / 1000);
+        const expiryTimestamp = Math.floor(Date.parse(`${values.expiryDate}T${values.expiryTime}`) / 1000);
         issueCertificate(
           personHash,
           sampleTimestamp,
