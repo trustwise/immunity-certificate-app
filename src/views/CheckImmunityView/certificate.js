@@ -9,7 +9,6 @@ const Certificate = ({certificate}) => {
       <div><Message>No certificate found</Message></div>
     );
   } else {
-    console.log(certificate);
     var status;
 
     if (certificate.revoked) {

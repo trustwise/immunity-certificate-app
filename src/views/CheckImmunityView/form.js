@@ -22,7 +22,6 @@ const CheckImmunityForm = ({setCertificate, setIsCertificateFetched}) => {
         const personalCode = Web3.utils.sha3(`${values.personalCode}`);
 
         getLastCertificate(personalCode).then((result) => {
-          console.log(result);
           getTesterId(result.tester).then(tester => {
             let tmp = tester.split(":");
             result.personalCode = values.personalCode.split(":")[0];
@@ -33,7 +32,6 @@ const CheckImmunityForm = ({setCertificate, setIsCertificateFetched}) => {
           });
         });
         setSubmitting(false);
-        console.log("submitting");
       }}
     >
       {({ isSubmitting, values, setFieldValue }) => (
