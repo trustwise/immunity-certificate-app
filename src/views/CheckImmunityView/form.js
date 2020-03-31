@@ -6,10 +6,9 @@ import Web3 from "web3";
 import QrReader from '../../core/components/qrReader';
 import { TextField } from '../../core/forms/fields';
 
-require('webrtc-adapter');
 
 const CheckImmunityForm = ({setCertificate, setIsCertificateFetched}) => {
-  
+
   return (
     <Formik
       initialValues={{
@@ -20,7 +19,6 @@ const CheckImmunityForm = ({setCertificate, setIsCertificateFetched}) => {
       })}
       onSubmit={(values, { setSubmitting }) => {
         const personalCode = Web3.utils.sha3(`${values.personalCode}`);
-
         getLastCertificate(personalCode).then((result) => {
           getTesterId(result.tester).then(tester => {
             let tmp = tester.split(":");
