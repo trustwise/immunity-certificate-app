@@ -61,6 +61,9 @@ label {
     border-color: $color-primary;
   }
 }
+input[type='button'], .button {
+  -webkit-appearance: none;
+}
 input[type=date], input[type=time] {
   // a little hack to inherit generic field styles from milligram
   @extend select;
