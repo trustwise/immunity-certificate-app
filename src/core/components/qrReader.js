@@ -35,7 +35,7 @@ class LegacyModeExample extends Component {
           onScan={this.handleScan}
           legacyMode
         />
-        <input type="button" value="Submit QR Code" onClick={this.openImageDialog} />
+        <input type="button" value="Scan QR Code" onClick={this.openImageDialog} />
       </div>
     )
   }
