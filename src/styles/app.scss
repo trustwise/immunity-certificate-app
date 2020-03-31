@@ -93,9 +93,15 @@ $green: #7ac142;
 $white: #fff;
 $curve: cubic-bezier(0.650, 0.000, 0.450, 1.000);
 .checkmark {
+  &.checkmark-small {
+    width: 30px;
+    height: 30px;
+  }
+  &.checkmark-large {
+    width: 180px;
+    height: 180px;
+  }
   margin: 0 auto;
-  width: 180px;
-  height: 180px;
   border-radius: 50%;
   display: block;
   stroke-width: 2;
