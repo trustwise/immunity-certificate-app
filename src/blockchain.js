@@ -49,8 +49,18 @@ const onEthereumEnabled = () => {
         await certificateContract.methods.issue(personHash, sampleTimestamp, expiryTimestamp, testKitId).send({from: await getSender()})
     );
 
+    const getCertificateAmount = async (personHash) => (
+        await certificateContract.methods.getCertificateAmount(personHash).call()
+    );
+
+    const revokeCertificate = async (personHash, certificateIndex) => (
+        await certificateContract.methods.revoke(personHash, certificateIndex).send({ from: await getSender() })
+    );
+
     window.getTesterId = getTesterId;
     window.approveTester = approveTester;
     window.getLastCertificate = getLastCertificate;
     window.issueCertificate = issueCertificate;
+    window.revokeCertificate = revokeCertificate;
+    window.getCertificateAmount = getCertificateAmount;
 };
