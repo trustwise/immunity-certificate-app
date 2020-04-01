@@ -19,6 +19,7 @@ const CheckImmunityForm = ({setCertificate, setIsCertificateFetched}) => (
       getLastCertificate(personalCode).then((result) => {
         getTesterId(result.tester).then(tester => {
           let tmp = tester.split(":");
+          result.expired = result.expiryTimestamp < Math.floor(Date.now() / 1000)
           result.personalCode = values.personalCode.split(":")[0];
           result.testerId = tmp[0];
           result.testerName = tmp[2];
