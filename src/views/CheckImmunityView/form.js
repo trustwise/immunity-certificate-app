@@ -4,7 +4,6 @@ import * as Yup from 'yup';
 import Web3 from "web3";
 
 import QrReader from '../../core/components/qrReader';
-import { TextField } from '../../core/forms/fields';
 
 
 const CheckImmunityForm = ({setCertificate, setIsCertificateFetched}) => {
