@@ -1,22 +1,31 @@
 import React from "react";
-import CheckMark from "../core/components/CheckMark"
 
-const CertificateResult = ({ passportId, testerId, testerName, validityDate }) => (
-  <div className="row">
-    <div className="column">
-      <br />
-      <h3>COVID19</h3>
-      <br />
-      <CheckMark size="large"/>
-      <br />
-      <span className="light-grey">Passport ID</span>
-      <h4>{passportId}</h4>
-      <span className="light-grey">Doctor Name and ID</span>
-      <h4>{`${testerName}, ${testerId}`}</h4>
-      <span className="light-grey">{validityDate}</span>
-      <h4>29.9.2020</h4>
+import { CheckMark } from "../../core/components"
+import { Message } from "../../core/messages";
+
+
+const CertificateResult = ({ certificate, resultRef }) => {
+  const { expired, expiryDate, revoked, passportId, testerId, testerName } = certificate;
+  if (!certificate) {
+    return <Message>No certificate found.</Message>;
+  }
+  return (
+    <div className="row" ref={resultRef}>
+      <div className="column">
+        <br />
+        <h3>COVID19 Immunity</h3>
+        {revoked ? <Message>This certificate has been revoked!</Message> : expired && <Message>This certificate has expired!</Message>}
+        {!revoked && !expired && <CheckMark size="large" />}
+        <br />
+        <span className="light-grey">Passport ID</span>
+        <h4>{passportId}</h4>
+        <span className="light-grey">Doctor Name and ID</span>
+        <h4>{`${testerName}, ${testerId}`}</h4>
+        <span className="light-grey">Valid Until</span>
+        <h4>{`${expiryDate.getDate()}.${expiryDate.getMonth() + 1}.${expiryDate.getFullYear()} `}</h4>
+      </div>
     </div>
-  </div>
-);
+  )
+};
 
 export default CertificateResult;

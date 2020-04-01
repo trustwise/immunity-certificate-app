@@ -1,12 +1,13 @@
 
 import React from "react";
-import { useEffect, Fragment, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 
 import CheckImmunityForm from './form';
-import Certificate from './certificate';
+import CertificateResult from './result';
 import {enableInfura} from '../../blockchain';
 
 const CheckImmunityView = () => {
+  const resultRef = useRef(null);
   const [certificate, setCertificate] = useState({});
   const [isCertificateFetched, setIsCertificateFetched] = useState(false);
   useEffect(() => {
@@ -17,10 +18,10 @@ const CheckImmunityView = () => {
       <div className="row">
         <div className="column">
           <h2>Check Immunity</h2>
-          <CheckImmunityForm setCertificate={setCertificate} setIsCertificateFetched={setIsCertificateFetched} />
+          <CheckImmunityForm setCertificate={setCertificate} setIsCertificateFetched={setIsCertificateFetched} resultRef={resultRef} />
         </div>
       </div>
-      { isCertificateFetched && <Certificate certificate={certificate} /> }
+      {isCertificateFetched && <CertificateResult certificate={certificate} resultRef={resultRef} /> }
     </Fragment>
 
   );
