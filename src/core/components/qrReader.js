@@ -2,24 +2,23 @@ import React, { Component, Fragment } from 'react'
 import QrReader from 'react-qr-reader'
 
 class LegacyQrReader extends Component {
-  constructor(props){
-    super(props)
-    this.handleScan = this.handleScan.bind(this)
-    this.openImageDialog = this.openImageDialog.bind(this)
+  constructor(props) {
+    super(props);
+    this.handleScan = this.handleScan.bind(this);
+    this.openImageDialog = this.openImageDialog.bind(this);
   }
-  handleScan(result){
-    if(result){
-      this.props.setFieldValue('personalCode', result);
-      this.props.submitForm && this.props.submitForm();
-    }
+  handleError(err) {
+    console.error(err);
   }
-  handleError(err){
-    console.error(err)
+  handleScan(result) {
+    const { onScan } = this.props;
+    onScan(result);
   }
   openImageDialog() {
-    this.refs.qrReader1.openImageDialog()
+    this.refs.qrReader1.openImageDialog();
   }
-  render(){
+  render() {
+
     return(
       <Fragment>
         <QrReader

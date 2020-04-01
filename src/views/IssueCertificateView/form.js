@@ -55,94 +55,99 @@ const IssueCertificateForm = () => {
         setSubmitting(false);
       }}
     >
-      {({ isSubmitting, values, setFieldValue, handleBlur, handleChange }) => (
-        <Form>
-          <h2>Choose Identity</h2>
-          <div className="text-align-left">
-            <input
-              type="radio"
-              id="identityMethod_1"
-              name="identityMethod"
-              value="create"
-              checked={values.identityMethod == 'create'}
-              onChange={handleChange}
-              onBlur={handleBlur}
+      {({ isSubmitting, values, setFieldValue, handleBlur, handleChange }) => {
+        const onScan = (result) => {
+          result && setFieldValue('personalCode', result);
+        }
+        return (
+          <Form>
+            <h2>Choose Identity</h2>
+            <div className="text-align-left">
+              <input
+                type="radio"
+                id="identityMethod_1"
+                name="identityMethod"
+                value="create"
+                checked={values.identityMethod == 'create'}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              <label className="label-inline" htmlFor="identityMethod_1" >Create new identity</label>
+              <br/>
+              <input
+                type="radio"
+                id="identityMethod_2"
+                name="identityMethod"
+                value="scan"
+                checked={values.identityMethod == 'scan'}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              <label className="label-inline" htmlFor="identityMethod_2">Scan existing ID</label>
+            </div>
+
+            { values.identityMethod === 'create' && (
+              <Fragment>
+                <TextField label="ID Number" name="idNumber" type="text" />
+                <button className="button" type="button" onClick={(_e) => onCreateClick(values)} >
+                  Create
+                </button>
+                { qrValue && <QRCode className="qr-code-img" value={qrValue} level="H" /> }
+              </Fragment>
+            )}
+
+
+            {values.identityMethod === 'scan' && (
+              <Fragment>
+                <LegacyQrReader onScan={onScan} />
+                {values.personalCode && (
+                  <Fragment>
+                    <label>ID Number</label>
+                    <input type="text" value={values.personalCode.split('::')[0]} readOnly/>
+                  </Fragment>
+                )}
+              </Fragment>
+            )}
+
+            <hr />
+
+            <h2>Issue Certificate</h2>
+
+            <TextField
+              label="Test Kit ID"
+              name="testKitId"
+              type="text"
             />
-            <label className="label-inline" htmlFor="identityMethod_1" >Create new identity</label>
-            <br/>
-            <input
-              type="radio"
-              id="identityMethod_2"
-              name="identityMethod"
-              value="scan"
-              checked={values.identityMethod == 'scan'}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            <label className="label-inline" htmlFor="identityMethod_2">Scan existing ID</label>
-          </div>
 
-          { values.identityMethod === 'create' && (
-            <Fragment>
-              <TextField label="ID Number" name="idNumber" type="text" />
-              <button className="button" type="button" onClick={(_e) => onCreateClick(values)} >
-                Create
-              </button>
-              { qrValue && <QRCode className="qr-code-img" value={qrValue} level="H" /> }
-            </Fragment>
-          )}
+            <label htmlFor="sampleDate">Sample Date and Time</label>
+            <div className="row">
+              <div className="column column-67">
+                <DateField name="sampleDate" />
+              </div>
+              <div className="column column-33">
+                <TimeField name="sampleTime" />
+              </div>
 
-
-          {values.identityMethod === 'scan' && (
-            <Fragment>
-              <LegacyQrReader setFieldValue={setFieldValue} />
-              {values.personalCode && (
-                <Fragment>
-                  <label>ID Number</label>
-                  <input type="text" value={values.personalCode.split('::')[0]} readOnly/>
-                </Fragment>
-              )}
-            </Fragment>
-          )}
-
-          <hr />
-
-          <h2>Issue Certificate</h2>
-
-          <TextField
-            label="Test Kit ID"
-            name="testKitId"
-            type="text"
-          />
-
-          <label htmlFor="sampleDate">Sample Date and Time</label>
-          <div className="row">
-            <div className="column column-67">
-              <DateField name="sampleDate" />
-            </div>
-            <div className="column column-33">
-              <TimeField name="sampleTime" />
             </div>
 
-          </div>
+            <label htmlFor="expiryDate">Expiry Date and Time</label>
+            <div className="row">
+              <div className="column column-67">
+                <DateField name="expiryDate" />
+              </div>
+              <div className="column column-33">
+                <TimeField name="expiryTime" />
+              </div>
 
-          <label htmlFor="expiryDate">Expiry Date and Time</label>
-          <div className="row">
-            <div className="column column-67">
-              <DateField name="expiryDate" />
             </div>
-            <div className="column column-33">
-              <TimeField name="expiryTime" />
-            </div>
 
-          </div>
+            <button className="button" type="submit" disabled={isSubmitting}>
+              Submit
+            </button>
 
-          <button className="button" type="submit" disabled={isSubmitting}>
-            Submit
-          </button>
-
-        </Form>
-      )}
+          </Form>
+        );
+      }}
     </Formik>
   );
 };
