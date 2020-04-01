@@ -4,16 +4,11 @@ import QrReader from 'react-qr-reader'
 class LegacyModeExample extends Component {
   constructor(props){
     super(props)
-    this.state = {
-      delay: 100,
-      result: '',
-    }
     this.handleScan = this.handleScan.bind(this)
     this.openImageDialog = this.openImageDialog.bind(this)
   }
   handleScan(result){
     if(result){
-      this.setState({ result })
       this.props.setFieldValue('personalCode', result);
       this.props.submitForm && this.props.submitForm();
     }
@@ -30,7 +25,7 @@ class LegacyModeExample extends Component {
         <QrReader
           ref="qrReader1"
           className="qr-reader"
-          delay={this.state.delay}
+          delay={100}
           onError={this.handleError}
           onScan={this.handleScan}
           legacyMode
