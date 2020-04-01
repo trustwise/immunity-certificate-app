@@ -88,7 +88,7 @@ const IssueCertificateForm = () => {
 
             { values.identityMethod === 'create' && (
               <Fragment>
-                <TextField label="ID Number" name="idNumber" type="text" />
+                <TextField label="Passport ID" name="idNumber" type="text" />
                 <button className="button" type="button" onClick={(_e) => onCreateClick(values)} >
                   Create
                 </button>
@@ -102,7 +102,7 @@ const IssueCertificateForm = () => {
                 <LegacyQrReader onScan={onScan} />
                 {values.personalCode && (
                   <Fragment>
-                    <label>ID Number</label>
+                    <label>Passport ID</label>
                     <input type="text" value={values.personalCode.split('::')[0]} readOnly/>
                   </Fragment>
                 )}
