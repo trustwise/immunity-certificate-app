@@ -2,7 +2,14 @@ import React from "react";
 import { enableEthereum } from '../blockchain';
 
 
-export const Message = ({ children }) => <div className="message">{children}</div>;
+export const Message = ({ children, className }) => <div className={`message ${className}`}>{children}</div>;
+
+
+export const CertificateExpired = () => <Message className="uppercase">This certificate has expired!</Message>
+
+
+export const CertificateRevoked = () => <Message className="uppercase">This certificate has been revoked!</Message>
+
 
 export const MetaMaskNotAvailable = () => (
   <Message>

@@ -1,7 +1,7 @@
 import React from "react";
 
 import { CheckMark } from "../../core/components"
-import { Message } from "../../core/messages";
+import { CertificateExpired, CertificateRevoked } from "../../core/messages";
 
 
 const CertificateResult = ({ certificate, resultRef }) => {
@@ -14,7 +14,7 @@ const CertificateResult = ({ certificate, resultRef }) => {
       <div className="column">
         <br />
         <h3>COVID19 Immunity</h3>
-        {revoked ? <Message>This certificate has been revoked!</Message> : expired && <Message>This certificate has expired!</Message>}
+        {revoked ? <CertificateRevoked /> : expired && <CertificateExpired />}
         {!revoked && !expired && <CheckMark size="large" />}
         <br />
         <span className="light-grey">Passport ID</span>
