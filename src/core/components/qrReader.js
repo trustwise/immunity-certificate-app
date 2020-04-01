@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import QrReader from 'react-qr-reader'
 
-class LegacyModeExample extends Component {
+class LegacyQrReader extends Component {
   constructor(props){
     super(props)
     this.handleScan = this.handleScan.bind(this)
@@ -21,7 +21,7 @@ class LegacyModeExample extends Component {
   }
   render(){
     return(
-      <div>
+      <Fragment>
         <QrReader
           ref="qrReader1"
           className="qr-reader"
@@ -31,9 +31,9 @@ class LegacyModeExample extends Component {
           legacyMode
         />
         <input type="button" value="Scan QR Code" onClick={this.openImageDialog} />
-      </div>
+      </Fragment>
     )
   }
 }
 
-export default LegacyModeExample;
+export default LegacyQrReader;

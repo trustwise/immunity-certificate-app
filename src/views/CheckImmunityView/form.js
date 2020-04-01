@@ -3,7 +3,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import Web3 from "web3";
 
-import QrReader from '../../core/components/qrReader';
+import LegacyQrReader from '../../core/components/qrReader';
 
 
 const CheckImmunityForm = ({setCertificate, setIsCertificateFetched}) => {
@@ -33,7 +33,7 @@ const CheckImmunityForm = ({setCertificate, setIsCertificateFetched}) => {
     >
       {({ isSubmitting, values, setFieldValue, submitForm }) => (
         <Form>
-          <QrReader setFieldValue={setFieldValue} submitForm={submitForm} />
+          <LegacyQrReader setFieldValue={setFieldValue} submitForm={submitForm} />
         </Form>
       )}
     </Formik>

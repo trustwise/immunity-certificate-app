@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 
 import { DateField, TextField, TimeField } from '../../core/forms/fields';
 import { generatePepper } from "../../core/utils";
-import QrReader from '../../core/components/qrReader';
+import LegacyQrReader from '../../core/components/qrReader';
 
 const today = new Date();
 const todayStr = today.toISOString().slice(0, 10);
@@ -95,7 +95,7 @@ const IssueCertificateForm = () => {
 
           {values.identityMethod === 'scan' && (
             <Fragment>
-              <QrReader setFieldValue={setFieldValue} />
+              <LegacyQrReader setFieldValue={setFieldValue} />
               {values.personalCode && (
                 <Fragment>
                   <label>ID Number</label>
