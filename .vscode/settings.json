@@ -9,5 +9,6 @@
         "formik",
         "minimised",
         "qrcode"
-    ]
+    ],
+    "editor.tabSize": 2
 }
