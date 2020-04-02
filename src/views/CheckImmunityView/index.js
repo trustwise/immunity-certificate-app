@@ -10,9 +10,7 @@ const CheckImmunityView = () => {
   const resultRef = useRef(null);
   const [certificate, setCertificate] = useState({});
   const [isCertificateFetched, setIsCertificateFetched] = useState(false);
-  useEffect(() => {
-    enableInfura();
-  }, []);
+  useEffect(() => { enableInfura(); }, []);
   return (
     <Fragment>
       <div className="row">
@@ -23,7 +21,6 @@ const CheckImmunityView = () => {
       </div>
       {isCertificateFetched && <CertificateResult certificate={certificate} resultRef={resultRef} /> }
     </Fragment>
-
   );
 };
 
