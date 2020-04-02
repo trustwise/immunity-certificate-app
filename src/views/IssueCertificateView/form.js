@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { Formik, Form } from 'formik';
 import QRCode from 'qrcode.react';
 import * as Yup from 'yup';
@@ -15,52 +15,59 @@ const inSixMonthsStr = new Date(today.setMonth(today.getMonth() + 6)).toISOStrin
 
 const IssueCertificateForm = () => {
 
-  const [qrValue, setQrValue] = useState('');
-
-  const onCreateClick = (values) => {
-    if (!values.idNumber) return false;
-    const pepper = generatePepper(8);
-    setQrValue(`${values.idNumber}${SEPARATOR}${pepper}`);
-  }
+  const [pepper, setPepper] = useState('');
+  const [passportId, setPassportId] = useState('');
 
   return (
     <Formik
       initialValues={{
         identityMethod: 'create',
-        personalCode: '',
-        idNumber: '',
-        testKitId: '',
         expiryDate: inSixMonthsStr,
         expiryTime: '09:00',
+        passportId: '',
         sampleDate: todayStr,
         sampleTime: '09:00',
+        testKitId: '',
       }}
       validationSchema={Yup.object({
-        idNumber: Yup.string(),
-        testKitId: Yup.string().required('This field is required'),
         expiryDate: Yup.string().required('This field is required'),
         expiryTime: Yup.string().required('This field is required'),
+        passportId: Yup.string(),
         sampleDate: Yup.string().required('This field is required'),
         sampleTime: Yup.string().required('This field is required'),
+        testKitId: Yup.string().required('This field is required'),
       })}
       onSubmit={(values, { setSubmitting }) => {
-        const valueToHash = values.identityMethod === 'create' ? qrValue : values.personalCode;
-        const personHash = web3.utils.sha3(valueToHash);
+        const personHash = web3.utils.sha3(`${passportId}${SEPARATOR}${pepper}`);
         const sampleTimestamp = Math.floor(Date.parse(`${values.sampleDate}T${values.sampleTime}`) / 1000);
         const expiryTimestamp = Math.floor(Date.parse(`${values.expiryDate}T${values.expiryTime}`) / 1000);
-        issueCertificate(
-          personHash,
-          sampleTimestamp,
-          expiryTimestamp,
-          values.testKitId,
-        )
+        issueCertificate(personHash, sampleTimestamp, expiryTimestamp, values.testKitId)
         setSubmitting(false);
       }}
     >
-      {({ isSubmitting, values, setFieldValue, handleBlur, handleChange }) => {
-        const onScan = (result) => {
-          result && setFieldValue('personalCode', result);
+      {({ isSubmitting, values, handleBlur, handleChange, validateField }) => {
+
+        useEffect(() => {
+          setPepper('');
+          setPassportId('');
+        }, [values.identityMethod]);
+
+        const onCreateClick = (_e) => {
+          validateField('passportId');
+          setPassportId(values.passportId);
+          setPepper(generatePepper(8));
         }
+
+        const onScan = (result) => {
+          if (!result || !result.includes(SEPARATOR)) {
+            console.error('Invalid QR code.');
+            return;
+          }
+          const [qrPassportId, qrPepper] = result.split(SEPARATOR);
+          setPassportId(qrPassportId);
+          setPepper(qrPepper);
+        }
+
         return (
           <Form>
 
@@ -92,21 +99,27 @@ const IssueCertificateForm = () => {
 
             { values.identityMethod === 'create' && (
               <Fragment>
-                <TextField label="Passport ID" name="idNumber" type="text" />
-                <button className="button" type="button" onClick={(_e) => onCreateClick(values)} >
+                <TextField label="Passport ID" name="passportId" type="text" />
+                <button className="button" type="button" onClick={onCreateClick} >
                   Create
                 </button>
-                { qrValue && <QRCode className="qr-code-img" value={qrValue} level="H" /> }
+                {passportId && pepper && (
+                  <Fragment>
+                    <QRCode className="qr-code-img" value={`${passportId}${SEPARATOR}${pepper}`} level="H" />
+                    <label>Personal Security Code</label>
+                    <input type="text" value={pepper} readOnly />
+                  </Fragment>
+                )}
               </Fragment>
             )}
 
             {values.identityMethod === 'scan' && (
               <Fragment>
                 <LegacyQrReader onScan={onScan} />
-                {values.personalCode && (
+                {passportId && pepper && (
                   <Fragment>
                     <label>Passport ID</label>
-                    <input type="text" value={values.personalCode.split(SEPARATOR)[0]} readOnly/>
+                    <input type="text" value={passportId} readOnly/>
                   </Fragment>
                 )}
               </Fragment>
