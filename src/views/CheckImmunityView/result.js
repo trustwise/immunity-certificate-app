@@ -2,10 +2,10 @@ import React from "react";
 
 import { CheckMark } from "../../core/components"
 import { CertificateExpired, CertificateRevoked } from "../../core/messages";
-
+import { formatDate } from "../../core/utils";
 
 const CertificateResult = ({ certificate, resultRef }) => {
-  const { expired, expiryDate, revoked, passportId, testerId, testerName } = certificate;
+  const { expired, expiryDate, passportId, revoked, sampleDate, testerId, testerName } = certificate;
   if (!certificate) {
     return <Message>No certificate found.</Message>;
   }
@@ -22,7 +22,9 @@ const CertificateResult = ({ certificate, resultRef }) => {
         <span className="light-grey">Doctor Name and ID</span>
         <h4>{`${testerName}, ${testerId}`}</h4>
         <span className="light-grey">Valid Until</span>
-        <h4>{`${expiryDate.getDate()}.${expiryDate.getMonth() + 1}.${expiryDate.getFullYear()} `}</h4>
+        <h4>{formatDate(expiryDate)}</h4>
+        <span className="light-grey">Test Date</span>
+        <h4>{formatDate(sampleDate)}</h4>
       </div>
     </div>
   )

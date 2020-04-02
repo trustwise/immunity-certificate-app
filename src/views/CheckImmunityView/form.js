@@ -21,6 +21,7 @@ const CheckImmunityForm = ({setCertificate, setIsCertificateFetched, resultRef})
           let tmp = tester.split(":");
           result.expired = result.expiryTimestamp < Math.floor(Date.now() / 1000);
           result.expiryDate = new Date(result.expiryTimestamp * 1000);
+          result.sampleDate = new Date(result.sampleTimestamp * 1000);
           result.passportId = values.personalCode.split(":")[0];
           result.testerId = tmp[0];
           result.testerName = tmp[2];
