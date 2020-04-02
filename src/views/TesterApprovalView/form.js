@@ -3,6 +3,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
 import { TextField } from '/core/forms/fields';
+import { SEPARATOR } from "/core/constants";
 
 
 const TesterApprovalForm = () => (
@@ -18,7 +19,7 @@ const TesterApprovalForm = () => (
       address: Yup.string().required('This field is required'),
     })}
     onSubmit={(values, { setSubmitting }) => {
-      const testerId = `${values.id}::${values.name}`;
+      const testerId = `${values.id}${SEPARATOR}${values.name}`;
       approveTester(values.address, testerId);
       setSubmitting(false);
     }}

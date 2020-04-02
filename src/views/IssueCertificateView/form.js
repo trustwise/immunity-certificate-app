@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import LegacyQrReader from '/core/components/LegacyQrReader';
 import { DateField, TextField, TimeField } from '/core/forms/fields';
 import { generatePepper } from "/core/utils";
+import { SEPARATOR } from "/core/constants";
 
 const today = new Date();
 const todayStr = today.toISOString().slice(0, 10);
@@ -19,7 +20,7 @@ const IssueCertificateForm = () => {
   const onCreateClick = (values) => {
     if (!values.idNumber) return false;
     const pepper = generatePepper(8);
-    setQrValue(`${values.idNumber}::${pepper}`);
+    setQrValue(`${values.idNumber}${SEPARATOR}${pepper}`);
   }
 
   return (
@@ -97,14 +98,13 @@ const IssueCertificateForm = () => {
               </Fragment>
             )}
 
-
             {values.identityMethod === 'scan' && (
               <Fragment>
                 <LegacyQrReader onScan={onScan} />
                 {values.personalCode && (
                   <Fragment>
                     <label>Passport ID</label>
-                    <input type="text" value={values.personalCode.split('::')[0]} readOnly/>
+                    <input type="text" value={values.personalCode.split(SEPARATOR)[0]} readOnly/>
                   </Fragment>
                 )}
               </Fragment>
