@@ -1,6 +1,5 @@
 
-import React from "react";
-import { Fragment, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from "react";
 
 import { enableInfura } from '/blockchain';
 import CheckImmunityForm from './form';
