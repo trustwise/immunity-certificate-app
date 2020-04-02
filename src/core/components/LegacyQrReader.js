@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import QrReader from 'react-qr-reader'
 
+
 class LegacyQrReader extends Component {
   constructor(props) {
     super(props);

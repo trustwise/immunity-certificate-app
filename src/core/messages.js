@@ -1,15 +1,12 @@
 import React from "react";
-import { enableEthereum } from '../blockchain';
+import { enableEthereum } from '/blockchain';
 
 
 export const Message = ({ children, className }) => <div className={`message ${className}`}>{children}</div>;
 
-
 export const CertificateExpired = () => <Message className="uppercase">This certificate has expired!</Message>
 
-
 export const CertificateRevoked = () => <Message className="uppercase">This certificate has been revoked!</Message>
-
 
 export const MetaMaskNotAvailable = () => (
   <Message>
@@ -17,7 +14,6 @@ export const MetaMaskNotAvailable = () => (
     <a href="https://metamask.io/download.html" className="button">Install</a>
   </Message>
 );
-
 
 export const AccountNotConnected = () => (
   <Message>

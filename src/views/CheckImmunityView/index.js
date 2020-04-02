@@ -2,9 +2,10 @@
 import React from "react";
 import { Fragment, useEffect, useRef, useState } from 'react';
 
+import { enableInfura } from '/blockchain';
 import CheckImmunityForm from './form';
 import CertificateResult from './result';
-import {enableInfura} from '../../blockchain';
+
 
 const CheckImmunityView = () => {
   const resultRef = useRef(null);

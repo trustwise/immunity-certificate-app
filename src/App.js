@@ -6,10 +6,10 @@ import {
   Route,
 } from "react-router-dom";
 
-import { Header, Navigation } from './core/components';
-import { IndexView, IssueCertificateView, TesterApprovalView, CheckImmunityView } from './views';
-import { Message, AccountNotConnected, MetaMaskNotAvailable } from './core/messages';
-import { enableEthereum, isAuthority, isTester } from './blockchain';
+import { Header, Navigation } from '/core/components';
+import { IndexView, IssueCertificateView, TesterApprovalView, CheckImmunityView } from '/views';
+import { Message, AccountNotConnected, MetaMaskNotAvailable } from '/core/messages';
+import { enableEthereum, isAuthority, isTester } from '/blockchain';
 
 
 const App = () => {

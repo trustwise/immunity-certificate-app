@@ -3,7 +3,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import Web3 from "web3";
 
-import LegacyQrReader from '../../core/components/qrReader';
+import LegacyQrReader from '/core/components/LegacyQrReader';
 
 
 const CheckImmunityForm = ({setCertificate, setIsCertificateFetched, resultRef}) => (

@@ -3,13 +3,14 @@ import { Formik, Form } from 'formik';
 import QRCode from 'qrcode.react';
 import * as Yup from 'yup';
 
-import { DateField, TextField, TimeField } from '../../core/forms/fields';
-import { generatePepper } from "../../core/utils";
-import LegacyQrReader from '../../core/components/qrReader';
+import LegacyQrReader from '/core/components/LegacyQrReader';
+import { DateField, TextField, TimeField } from '/core/forms/fields';
+import { generatePepper } from "/core/utils";
 
 const today = new Date();
 const todayStr = today.toISOString().slice(0, 10);
 const inSixMonthsStr = new Date(today.setMonth(today.getMonth() + 6)).toISOString().slice(0, 10);
+
 
 const IssueCertificateForm = () => {
 

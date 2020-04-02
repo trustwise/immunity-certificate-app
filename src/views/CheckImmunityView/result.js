@@ -1,8 +1,9 @@
 import React from "react";
 
-import { CheckMark } from "../../core/components"
-import { CertificateExpired, CertificateRevoked } from "../../core/messages";
-import { formatDate } from "../../core/utils";
+import { CheckMark } from "/core/components"
+import { CertificateExpired, CertificateRevoked } from "/core/messages";
+import { formatDate } from "/core/utils";
+
 
 const CertificateResult = ({ certificate, resultRef }) => {
   const { expired, expiryDate, passportId, revoked, sampleDate, testerId, testerName } = certificate;
