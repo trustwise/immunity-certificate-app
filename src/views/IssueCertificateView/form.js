@@ -4,7 +4,7 @@ import QRCode from 'qrcode.react';
 import * as Yup from 'yup';
 
 import LegacyQrReader from '/core/components/LegacyQrReader';
-import { DateField, TextField, TimeField } from '/core/forms/fields';
+import { DateTimeFields, TextField } from '/core/forms/fields';
 import { generatePepper } from "/core/utils";
 import { SEPARATOR } from "/core/constants";
 
@@ -63,7 +63,9 @@ const IssueCertificateForm = () => {
         }
         return (
           <Form>
+
             <h2>Choose Identity</h2>
+
             <div className="text-align-left">
               <input
                 type="radio"
@@ -120,27 +122,17 @@ const IssueCertificateForm = () => {
               type="text"
             />
 
-            <label htmlFor="sampleDate">Sample Date and Time</label>
-            <div className="row">
-              <div className="column column-67">
-                <DateField name="sampleDate" />
-              </div>
-              <div className="column column-33">
-                <TimeField name="sampleTime" />
-              </div>
+            <DateTimeFields
+              label="Sample Date and Time"
+              nameDate="sampleDate"
+              nameTime="sampleTime"
+            />
 
-            </div>
-
-            <label htmlFor="expiryDate">Expiry Date and Time</label>
-            <div className="row">
-              <div className="column column-67">
-                <DateField name="expiryDate" />
-              </div>
-              <div className="column column-33">
-                <TimeField name="expiryTime" />
-              </div>
-
-            </div>
+            <DateTimeFields
+              label="Expiry Date and Time"
+              nameDate="expiryDate"
+              nameTime="expiryTime"
+            />
 
             <button className="button" type="submit" disabled={isSubmitting}>
               Submit

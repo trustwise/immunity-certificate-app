@@ -3,5 +3,6 @@
  */
 
 export { default as DateField } from './date';
+export { default as DateTimeFields } from './dateTime';
 export { default as TextField } from './text';
 export { default as TimeField } from './time';
