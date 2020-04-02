@@ -70,6 +70,16 @@ input[type=date], input[type=time] {
   @extend select;
 }
 
+// Description Lists
+dd {
+  margin-inline-start: 0;
+  margin-bottom: 0;
+  @extend .light-grey;
+}
+dt {
+  @extend h4;
+}
+
 // Messages
 .message {
   @extend .outline;
