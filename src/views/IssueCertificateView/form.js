@@ -3,10 +3,10 @@ import { Formik, Form } from 'formik';
 import QRCode from 'qrcode.react';
 import * as Yup from 'yup';
 
-import LegacyQrReader from '/core/components/LegacyQrReader';
+import { DescriptionList, LegacyQrReader } from '/core/components';
+import { SEPARATOR } from "/core/constants";
 import { DateTimeFields, TextField } from '/core/forms/fields';
 import { generatePepper } from "/core/utils";
-import { SEPARATOR } from "/core/constants";
 
 const today = new Date();
 const todayStr = today.toISOString().slice(0, 10);
@@ -41,7 +41,7 @@ const IssueCertificateForm = () => {
         const personHash = web3.utils.sha3(`${passportId}${SEPARATOR}${pepper}`);
         const sampleTimestamp = Math.floor(Date.parse(`${values.sampleDate}T${values.sampleTime}`) / 1000);
         const expiryTimestamp = Math.floor(Date.parse(`${values.expiryDate}T${values.expiryTime}`) / 1000);
-        issueCertificate(personHash, sampleTimestamp, expiryTimestamp, values.testKitId)
+        issueCertificate(personHash, sampleTimestamp, expiryTimestamp, values.testKitId);
         setSubmitting(false);
       }}
     >
@@ -105,9 +105,9 @@ const IssueCertificateForm = () => {
                 </button>
                 {passportId && pepper && (
                   <Fragment>
+                    <hr />
                     <QRCode className="qr-code-img" value={`${passportId}${SEPARATOR}${pepper}`} level="H" />
-                    <label>Personal Security Code</label>
-                    <input type="text" value={pepper} readOnly />
+                    <DescriptionList data={[['Passport ID', passportId], ['Personal Security Code', pepper]]} />
                   </Fragment>
                 )}
               </Fragment>
@@ -115,11 +115,12 @@ const IssueCertificateForm = () => {
 
             {values.identityMethod === 'scan' && (
               <Fragment>
+                <br />
                 <LegacyQrReader onScan={onScan} />
                 {passportId && pepper && (
                   <Fragment>
-                    <label>Passport ID</label>
-                    <input type="text" value={passportId} readOnly/>
+                    <hr />
+                    <DescriptionList data={[['Passport ID', passportId]]} />
                   </Fragment>
                 )}
               </Fragment>
