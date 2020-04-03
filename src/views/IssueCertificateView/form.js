@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import { CheckMark, DescriptionList, LegacyQrReader } from '/core/components';
 import { Message } from '/core/messages';
 import { SEPARATOR } from "/core/constants";
-import { DateTimeFields, TextField } from '/core/forms/fields';
+import { Button, DateTimeFields, RadioField, TextField } from '/core/forms/fields';
 import { generatePepper } from "/core/utils";
 
 const today = new Date();
@@ -71,6 +71,11 @@ const IssueCertificateForm = () => {
           resetCertificateForm();
         }
 
+        const onResetClick = (_e) => {
+          resetForm();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
         const onScan = (result) => {
           if (!result || !result.includes(SEPARATOR)) {
             console.error('Invalid QR code.');
@@ -88,35 +93,29 @@ const IssueCertificateForm = () => {
             <h2>Choose Identity</h2>
 
             <div className="text-align-left">
-              <input
-                type="radio"
-                id="identityMethod_1"
+              <RadioField
+                label="Create new identity"
                 name="identityMethod"
                 value="create"
                 checked={values.identityMethod == 'create'}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              <label className="label-inline" htmlFor="identityMethod_1" >Create new identity</label>
               <br/>
-              <input
-                type="radio"
-                id="identityMethod_2"
+              <RadioField
+                label="Scan existing ID"
                 name="identityMethod"
                 value="scan"
                 checked={values.identityMethod == 'scan'}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              <label className="label-inline" htmlFor="identityMethod_2">Scan existing ID</label>
             </div>
 
             { values.identityMethod === 'create' && (
               <Fragment>
                 <TextField label="Passport ID" name="passportId" type="text" />
-                <button className="button" type="button" onClick={onCreateClick} >
-                  Create
-                </button>
+                <Button onClick={onCreateClick}>Create</Button>
                 {passportId && pepper && (
                   <Fragment>
                     <hr />
@@ -146,15 +145,7 @@ const IssueCertificateForm = () => {
                 <br />
                 <h4>Certificate issued</h4>
                 <br />
-                <button
-                  className="button-outline"
-                  onClick={(_e) => {
-                    resetForm();
-                    window.scrollTo({top: 0, behavior: 'smooth'});
-                  }}
-                >
-                  Issue Another
-                </button>
+                <Button className="button-outline" onClick={onResetClick}>Issue Another</Button>
               </Fragment>
             )}
 
@@ -184,9 +175,7 @@ const IssueCertificateForm = () => {
                   nameDate="expiryDate"
                   nameTime="expiryTime"
                 />
-                <button className="button" type="submit" disabled={isSubmitting}>
-                  Submit
-                </button>
+                <Button type="submit" disabled={isSubmitting}>Submit</Button>
               </Fragment>
             )}
 

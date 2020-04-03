@@ -42,9 +42,7 @@ const TesterApprovalForm = () => (
           type="text"
           placeholder="0x"
         />
-        <button className="button" type="submit" disabled={isSubmitting}>
-          Submit
-        </button>
+        <Button type="submit" disabled={isSubmitting}>Submit</Button>
       </Form>
     )}
   </Formik>
