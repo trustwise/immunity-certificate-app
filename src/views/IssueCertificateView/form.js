@@ -45,7 +45,7 @@ const IssueCertificateForm = () => {
         const expiryTimestamp = Math.floor(Date.parse(`${values.expiryDate}T${values.expiryTime}`) / 1000);
         issueCertificate(personHash, sampleTimestamp, expiryTimestamp, values.testKitId)
           .then((result) => { result.status ? setCertificateIssued(true) : console.error(result); })
-          .catch((_error) => { /* TODO handle transaction errors */ })
+          .catch(console.error)
           .finally(() => { setSubmitting(false); });
       }}
     >
