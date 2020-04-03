@@ -8,7 +8,7 @@ import { SEPARATOR } from "/core/constants";
 
 
 const CheckImmunityForm = ({setCertificate, setIsCertificateFetched, resultRef}) => {
-  const onSubmitFinished = (result, setSubmitting) => {
+  const handleSubmitFinished = (result, setSubmitting) => {
     setCertificate(result);
     setIsCertificateFetched(true);
     setSubmitting(false);
@@ -34,11 +34,11 @@ const CheckImmunityForm = ({setCertificate, setIsCertificateFetched, resultRef})
               result.passportId = passportId;
               result.testerId = testerId;
               result.testerName = testerName;
-              onSubmitFinished(result, setSubmitting);
+              handleSubmitFinished(result, setSubmitting);
               resultRef.current && resultRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
             });
           } catch (_error) {
-            onSubmitFinished(result, setSubmitting);
+            handleSubmitFinished(result, setSubmitting);
           }
         });
       }}

@@ -64,19 +64,19 @@ const IssueCertificateForm = () => {
           });
         }
 
-        const onCreateClick = (_e) => {
+        const handleCreateIdentity = (_e) => {
           validateField('passportId');
           setPassportId(values.passportId);
           setPepper(generatePepper(8));
           resetCertificateForm();
         }
 
-        const onResetClick = (_e) => {
+        const handleFormReset = (_e) => {
           resetForm();
           window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
-        const onScan = (result) => {
+        const handleQrScan = (result) => {
           if (!result || !result.includes(SEPARATOR)) {
             console.error('Invalid QR code.');
             return;
@@ -115,7 +115,7 @@ const IssueCertificateForm = () => {
             { values.identityMethod === 'create' && (
               <Fragment>
                 <TextField label="Passport ID" name="passportId" type="text" />
-                <Button onClick={onCreateClick}>Create</Button>
+                <Button onClick={handleCreateIdentity}>Create</Button>
                 {passportId && pepper && (
                   <Fragment>
                     <hr />
@@ -129,7 +129,7 @@ const IssueCertificateForm = () => {
             {values.identityMethod === 'scan' && (
               <Fragment>
                 <br />
-                <LegacyQrReader onScan={onScan} />
+                <LegacyQrReader onScan={handleQrScan} />
                 {passportId && pepper && (
                   <Fragment>
                     <hr />
@@ -145,7 +145,7 @@ const IssueCertificateForm = () => {
                 <br />
                 <h4>Certificate issued</h4>
                 <br />
-                <Button className="button-outline" onClick={onResetClick}>Issue Another</Button>
+                <Button className="button-outline" onClick={handleFormReset}>Issue Another</Button>
               </Fragment>
             )}
 
