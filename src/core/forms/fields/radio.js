@@ -14,6 +14,7 @@ const RadioField = ({ checked, id, label, name, type, value, ...props }) => {
         {...props}
       />
       <label className="label-inline" htmlFor={fieldId}>{label}</label>
+      <br />
     </Fragment>
   );
 };

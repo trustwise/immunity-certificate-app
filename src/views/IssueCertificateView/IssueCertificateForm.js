@@ -1,13 +1,16 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import { Formik, Form } from 'formik';
-import QRCode from 'qrcode.react';
 import * as Yup from 'yup';
 
-import { CheckMark, DescriptionList, LegacyQrReader } from '/core/components';
+import { CheckMark } from '/core/components';
 import { Message } from '/core/messages';
-import { SEPARATOR } from "/core/constants";
-import { Button, DateTimeFields, RadioField, TextField } from '/core/forms/fields';
-import { generatePepper } from "/core/utils";
+import { SEPARATOR } from '/core/constants';
+import { Button, RadioField } from '/core/forms/fields';
+import { generatePepper } from '/core/utils';
+
+import CertificateFieldSet from './CertificateFieldSet';
+import CreatIdentityComponent from './CreatIdentityComponent';
+import ScanIdentityComponent from './ScanIdentityComponent';
 
 const today = new Date();
 const todayStr = today.toISOString().slice(0, 10);
@@ -49,30 +52,30 @@ const IssueCertificateForm = () => {
           .finally(() => { setSubmitting(false); });
       }}
     >
-      {({ isSubmitting, values, handleBlur, handleChange, initialValues, resetForm, setFieldValue, validateField }) => {
+      {(form) => {
 
         useEffect(() => {
           setPepper('');
           setPassportId('');
           resetCertificateForm();
-        }, [values.identityMethod]);
+        }, [form.values.identityMethod]);
 
         const resetCertificateForm = () => {
           setCertificateIssued(false);
           ['testKitId', 'expiryDate', 'expiryTime', 'sampleDate', 'sampleTime'].map((fieldName) => {
-            setFieldValue(fieldName, initialValues[fieldName]);
+            form.setFieldValue(fieldName, form.initialValues[fieldName]);
           });
         }
 
         const handleCreateIdentity = (_e) => {
-          validateField('passportId');
-          setPassportId(values.passportId);
+          form.validateField('passportId');
+          setPassportId(form.values.passportId);
           setPepper(generatePepper(8));
           resetCertificateForm();
         }
 
         const handleFormReset = (_e) => {
-          resetForm();
+          form.resetForm();
           window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
@@ -92,92 +95,54 @@ const IssueCertificateForm = () => {
 
             <h2>Choose Identity</h2>
 
-            <div className="text-align-left">
-              <RadioField
-                label="Create new identity"
-                name="identityMethod"
-                value="create"
-                checked={values.identityMethod == 'create'}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              <br/>
-              <RadioField
-                label="Scan existing ID"
-                name="identityMethod"
-                value="scan"
-                checked={values.identityMethod == 'scan'}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
+            <div className="radio-button-group">
+              {[['create', 'Create new identity'], ['scan', 'Scan existing ID']].map(
+                ([value, label]) => (
+                  <RadioField
+                    key={value}
+                    value={value}
+                    label={label}
+                    name="identityMethod"
+                    onBlur={form.handleBlur}
+                    onChange={form.handleChange}
+                    checked={form.values.identityMethod == value}
+                  />
+                )
+              )}
             </div>
 
-            { values.identityMethod === 'create' && (
-              <Fragment>
-                <TextField label="Passport ID" name="passportId" type="text" />
-                <Button onClick={handleCreateIdentity}>Create</Button>
-                {passportId && pepper && (
-                  <Fragment>
-                    <hr />
-                    <QRCode className="qr-code-img" value={`${passportId}${SEPARATOR}${pepper}`} level="H" />
-                    <DescriptionList data={[['Passport ID', passportId], ['Personal Security Code', pepper]]} />
-                  </Fragment>
-                )}
-              </Fragment>
+            {form.values.identityMethod === 'create' && (
+              <CreatIdentityComponent
+                onSubmit={handleCreateIdentity}
+                passportId={passportId}
+                pepper={pepper}
+              />
             )}
 
-            {values.identityMethod === 'scan' && (
-              <Fragment>
-                <br />
-                <LegacyQrReader onScan={handleQrScan} />
-                {passportId && pepper && (
-                  <Fragment>
-                    <hr />
-                    <DescriptionList data={[['Passport ID', passportId]]} />
-                  </Fragment>
-                )}
-              </Fragment>
+            {form.values.identityMethod === 'scan' && (
+              <ScanIdentityComponent
+                onScan={handleQrScan}
+                passportId={passportId}
+                pepper={pepper}
+              />
             )}
 
             {certificateIssued && (
               <Fragment>
                 <CheckMark size="large" />
-                <br />
-                <h4>Certificate issued</h4>
-                <br />
+                <h4 className="padded">Certificate issued</h4>
                 <Button className="button-outline" onClick={handleFormReset}>Issue Another</Button>
               </Fragment>
             )}
 
-            {(!certificateIssued && isSubmitting ) && (
+            {(!certificateIssued && form.isSubmitting ) && (
               <Message>
                 Please confirm the certificate issuing and wait for the confirmation.
                 This may take a couple of seconds depending on the network speed.
               </Message>
             )}
 
-            {(!certificateIssued && !isSubmitting) && (
-              <Fragment>
-                <hr />
-                <h2>Issue Certificate</h2>
-                <TextField
-                  label="Test Kit ID"
-                  name="testKitId"
-                  type="text"
-                />
-                <DateTimeFields
-                  label="Sample Date and Time"
-                  nameDate="sampleDate"
-                  nameTime="sampleTime"
-                />
-                <DateTimeFields
-                  label="Expiry Date and Time"
-                  nameDate="expiryDate"
-                  nameTime="expiryTime"
-                />
-                <Button type="submit" disabled={isSubmitting}>Submit</Button>
-              </Fragment>
-            )}
+            {(!certificateIssued && !form.isSubmitting) && <CertificateFieldSet  />}
 
           </Form>
         );
@@ -185,6 +150,5 @@ const IssueCertificateForm = () => {
     </Formik>
   );
 };
-
 
 export default IssueCertificateForm;

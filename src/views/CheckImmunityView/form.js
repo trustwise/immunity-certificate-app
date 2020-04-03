@@ -44,7 +44,7 @@ const CheckImmunityForm = ({setCertificate, setIsCertificateFetched, resultRef})
       }}
     >
       {({ setFieldValue, submitForm }) => {
-        const onScan = (result) => {
+        const handleQrScan = (result) => {
           if (result) {
             // TODO handle invalid QR code
             setFieldValue('personalCode', result);
@@ -53,7 +53,7 @@ const CheckImmunityForm = ({setCertificate, setIsCertificateFetched, resultRef})
         }
         return (
           <Form>
-            <LegacyQrReader onScan={onScan} />
+            <LegacyQrReader onScan={handleQrScan} />
           </Form>
         );
       }}

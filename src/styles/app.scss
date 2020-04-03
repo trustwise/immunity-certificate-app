@@ -6,7 +6,7 @@
 .centered { margin: 0 auto; }
 .limit-width { max-width: 40rem; }
 .outline { border: 1px solid $color-primary; border-radius: 4px; }
-.padded { padding: 4rem 2rem; }
+.padded { padding: 2rem; }
 .text-align-left { text-align: left; }
 .uppercase { text-transform: uppercase; }
 .light-grey { color: #bbb; }
@@ -69,6 +69,9 @@ input[type=date], input[type=time] {
   // a little hack to inherit generic field styles from milligram
   @extend select;
 }
+.radio-button-group {
+  @extend .text-align-left;
+}
 
 // Description Lists
 dd {
@@ -84,15 +87,15 @@ dt {
 // Messages
 .message {
   @extend .outline;
-  @extend .padded;
   @extend .centered;
   @extend .limit-width;
+  padding: 4rem 2rem;
 }
 
 // QR code
 .qr-code-img {
   display: block;
-  margin: 6rem auto;
+  margin: 3rem auto;
 }
 
 // QR reader

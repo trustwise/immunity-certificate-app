@@ -1,7 +1,7 @@
 
 import React from "react";
 
-import IssueCertificateForm from './form'
+import IssueCertificateForm from './IssueCertificateForm'
 
 const IssueCertificateView = () => (
   <div className="row">
