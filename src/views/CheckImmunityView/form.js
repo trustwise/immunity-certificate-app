@@ -19,7 +19,7 @@ const CheckImmunityForm = ({setCertificate, setIsCertificateFetched, resultRef})
     getLastCertificate(personalCodeHash).then((result) => {
       try {
         getTesterId(result.tester).then((tester) => {
-          const [testerName, testerId] = tester.split(SEPARATOR);
+          const [testerId, testerName] = tester.split(SEPARATOR);
           const [passportId, _pepper] = personalCode.split(SEPARATOR);
           result.expired = result.expiryTimestamp < Math.floor(Date.now() / 1000);
           result.expiryDate = new Date(result.expiryTimestamp * 1000);
