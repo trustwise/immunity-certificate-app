@@ -3,7 +3,8 @@ import { Formik, Form } from 'formik';
 import QRCode from 'qrcode.react';
 import * as Yup from 'yup';
 
-import { DescriptionList, LegacyQrReader } from '/core/components';
+import { CheckMark, DescriptionList, LegacyQrReader } from '/core/components';
+import { Message } from '/core/messages';
 import { SEPARATOR } from "/core/constants";
 import { DateTimeFields, TextField } from '/core/forms/fields';
 import { generatePepper } from "/core/utils";
@@ -17,6 +18,7 @@ const IssueCertificateForm = () => {
 
   const [pepper, setPepper] = useState('');
   const [passportId, setPassportId] = useState('');
+  const [certificateIssued, setCertificateIssued] = useState(false);
 
   return (
     <Formik
@@ -41,21 +43,32 @@ const IssueCertificateForm = () => {
         const personHash = web3.utils.sha3(`${passportId}${SEPARATOR}${pepper}`);
         const sampleTimestamp = Math.floor(Date.parse(`${values.sampleDate}T${values.sampleTime}`) / 1000);
         const expiryTimestamp = Math.floor(Date.parse(`${values.expiryDate}T${values.expiryTime}`) / 1000);
-        issueCertificate(personHash, sampleTimestamp, expiryTimestamp, values.testKitId);
-        setSubmitting(false);
+        issueCertificate(personHash, sampleTimestamp, expiryTimestamp, values.testKitId)
+          .then((result) => { result.status ? setCertificateIssued(true) : console.error(result); })
+          .catch((_error) => { /* TODO handle transaction errors */ })
+          .finally(() => { setSubmitting(false); });
       }}
     >
-      {({ isSubmitting, values, handleBlur, handleChange, validateField }) => {
+      {({ isSubmitting, values, handleBlur, handleChange, initialValues, resetForm, setFieldValue, validateField }) => {
 
         useEffect(() => {
           setPepper('');
           setPassportId('');
+          resetCertificateForm();
         }, [values.identityMethod]);
+
+        const resetCertificateForm = () => {
+          setCertificateIssued(false);
+          ['testKitId', 'expiryDate', 'expiryTime', 'sampleDate', 'sampleTime'].map((fieldName) => {
+            setFieldValue(fieldName, initialValues[fieldName]);
+          });
+        }
 
         const onCreateClick = (_e) => {
           validateField('passportId');
           setPassportId(values.passportId);
           setPepper(generatePepper(8));
+          resetCertificateForm();
         }
 
         const onScan = (result) => {
@@ -66,6 +79,7 @@ const IssueCertificateForm = () => {
           const [qrPassportId, qrPepper] = result.split(SEPARATOR);
           setPassportId(qrPassportId);
           setPepper(qrPepper);
+          resetCertificateForm();
         }
 
         return (
@@ -126,31 +140,55 @@ const IssueCertificateForm = () => {
               </Fragment>
             )}
 
-            <hr />
+            {certificateIssued && (
+              <Fragment>
+                <CheckMark size="large" />
+                <br />
+                <h4>Certificate issued</h4>
+                <br />
+                <button
+                  className="button-outline"
+                  onClick={(_e) => {
+                    resetForm();
+                    window.scrollTo({top: 0, behavior: 'smooth'});
+                  }}
+                >
+                  Issue Another
+                </button>
+              </Fragment>
+            )}
 
-            <h2>Issue Certificate</h2>
+            {(!certificateIssued && isSubmitting ) && (
+              <Message>
+                Please confirm the certificate issuing and wait for the confirmation.
+                This may take a couple of seconds depending on the network speed.
+              </Message>
+            )}
 
-            <TextField
-              label="Test Kit ID"
-              name="testKitId"
-              type="text"
-            />
-
-            <DateTimeFields
-              label="Sample Date and Time"
-              nameDate="sampleDate"
-              nameTime="sampleTime"
-            />
-
-            <DateTimeFields
-              label="Expiry Date and Time"
-              nameDate="expiryDate"
-              nameTime="expiryTime"
-            />
-
-            <button className="button" type="submit" disabled={isSubmitting}>
-              Submit
-            </button>
+            {(!certificateIssued && !isSubmitting) && (
+              <Fragment>
+                <hr />
+                <h2>Issue Certificate</h2>
+                <TextField
+                  label="Test Kit ID"
+                  name="testKitId"
+                  type="text"
+                />
+                <DateTimeFields
+                  label="Sample Date and Time"
+                  nameDate="sampleDate"
+                  nameTime="sampleTime"
+                />
+                <DateTimeFields
+                  label="Expiry Date and Time"
+                  nameDate="expiryDate"
+                  nameTime="expiryTime"
+                />
+                <button className="button" type="submit" disabled={isSubmitting}>
+                  Submit
+                </button>
+              </Fragment>
+            )}
 
           </Form>
         );
