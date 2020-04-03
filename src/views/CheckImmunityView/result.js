@@ -1,13 +1,13 @@
 import React from "react";
 
-import { CheckMark, DescriptionList } from "/core/components"
-import { CertificateExpired, CertificateRevoked } from "/core/messages";
+import { CheckMark, DescriptionList } from "/core/components";
+import { CertificateExpired, CertificateRevoked, Message } from "/core/messages";
 import { formatDate } from "/core/utils";
 
 
 const CertificateResult = ({ certificate, resultRef }) => {
   if (!certificate) {
-    return <Message>No certificate found.</Message>;
+    return <Message className="uppercase">No certificate found.</Message>;
   }
   const { expired, expiryDate, passportId, revoked, sampleDate, testerId, testerName } = certificate;
   const data = [

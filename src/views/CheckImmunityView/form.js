@@ -3,7 +3,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import Web3 from "web3";
 
-import LegacyQrReader from '/core/components/LegacyQrReader';
+import { LegacyQrReader } from '/core/components';
 import { SEPARATOR } from "/core/constants";
 
 
@@ -18,19 +18,21 @@ const CheckImmunityForm = ({setCertificate, setIsCertificateFetched, resultRef})
     onSubmit={(values, { setSubmitting }) => {
       const personalCode = Web3.utils.sha3(`${values.personalCode}`);
       getLastCertificate(personalCode).then((result) => {
-        getTesterId(result.tester).then((tester) => {
-          const [testerName, testerId] = tester.split(SEPARATOR);
-          const [passportId, _pepper] = values.personalCode.split(SEPARATOR);
-          result.expired = result.expiryTimestamp < Math.floor(Date.now() / 1000);
-          result.expiryDate = new Date(result.expiryTimestamp * 1000);
-          result.sampleDate = new Date(result.sampleTimestamp * 1000);
-          result.passportId = passportId;
-          result.testerId = testerId;
-          result.testerName = testerName;
-          setCertificate(result);
-          setIsCertificateFetched(true);
+        if (result) {
+          getTesterId(result.tester).then((tester) => {
+            const [testerName, testerId] = tester.split(SEPARATOR);
+            const [passportId, _pepper] = values.personalCode.split(SEPARATOR);
+            result.expired = result.expiryTimestamp < Math.floor(Date.now() / 1000);
+            result.expiryDate = new Date(result.expiryTimestamp * 1000);
+            result.sampleDate = new Date(result.sampleTimestamp * 1000);
+            result.passportId = passportId;
+            result.testerId = testerId;
+            result.testerName = testerName;
+          });
           resultRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        });
+        }
+        setCertificate(result);
+        setIsCertificateFetched(true);
       });
       setSubmitting(false);
     }}
