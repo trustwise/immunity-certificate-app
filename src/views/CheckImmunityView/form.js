@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment, useState } from "react";
 import Web3 from "web3";
 
 import { LegacyQrReader } from '/core/components';
@@ -6,11 +6,10 @@ import { SEPARATOR } from "/core/constants";
 
 
 const CheckImmunityForm = ({setCertificate, setIsCertificateFetched, resultRef}) => {
-  const handleSubmitFinished = (result) => {
-    setCertificate(result);
-    setIsCertificateFetched(true);
-  };
+  const [isLoading, setIsLoading] = useState(false);
   const handleQrScan = (personalCode) => {
+    setIsLoading(true);
+    setIsCertificateFetched(false);
     // TODO handle invalid QR code
     if (!personalCode) {
       return null;
@@ -35,7 +34,16 @@ const CheckImmunityForm = ({setCertificate, setIsCertificateFetched, resultRef})
       }
     });
   };
-  return <LegacyQrReader onScan={handleQrScan} />;
+  const handleSubmitFinished = (result) => {
+    setCertificate(result);
+    setIsCertificateFetched(true);
+    setIsLoading(false);
+  };
+  return (
+    <Fragment>
+      <LegacyQrReader onScan={handleQrScan} disabled={isLoading} />
+    </Fragment>
+  );
 };
 
 export default CheckImmunityForm;

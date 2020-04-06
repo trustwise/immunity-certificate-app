@@ -21,7 +21,7 @@ class LegacyQrReader extends Component {
     this.refs.qrReader1.openImageDialog();
   }
   render() {
-
+    const { disabled } = this.props;
     return(
       <Fragment>
         <QrReader
@@ -32,7 +32,9 @@ class LegacyQrReader extends Component {
           onScan={this.handleScan}
           legacyMode
         />
-        <Button onClick={this.openImageDialog}>Scan QR Code</Button>
+        <Button onClick={this.openImageDialog} disabled={disabled}>
+          {disabled ? 'Loading...' : 'Scan QR Code'}
+        </Button>
       </Fragment>
     )
   }
