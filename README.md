@@ -1,3 +1,5 @@
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/trustwise/immunity-certificate-app) 
+
 # Immunity Certificate App
 
 ## Preparation of Authority and Tester accounts using MetaMask
